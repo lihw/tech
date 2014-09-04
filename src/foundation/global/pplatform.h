@@ -20,9 +20,9 @@
 #elif defined __APPLE__
 # define P_IOS
 # define P_LLVM
-#elif defined 
-# define __ANDROID__
+#elif defined __ANDROID__
 # define P_GCC
+# define P_ANDROID
 #else
 # error "Unsupported platform"
 #endif

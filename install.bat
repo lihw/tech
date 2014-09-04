@@ -9,11 +9,9 @@ IF %errorLevel% == 0 (GOTO CONFIRMED) ELSE (GOTO ERROR)
 :CONFIRMED
 ECHO Administrative permissions confirmed.
 ECHO Setting environment variables.
-if DEFINED FITECH ( echo Installation was already executed ) ELSE (
 @setx /m FITECH %CD%
 ::@setx /m PATH "%PATH%;%CD%\Tools\bin"
 ECHO Installation completed.
-)
 GOTO EXIT
 :ERROR
 ECHO Not an administrator. 

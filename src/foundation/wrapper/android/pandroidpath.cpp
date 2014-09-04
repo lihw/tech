@@ -28,5 +28,5 @@ const pchar * P_APIENTRY pPathGetDelimiter()
 
 const pchar * P_APIENTRY pPathGetExternalStoragePath()
 {
-    return g_pSDCardPath;
+    return g_pExternalStoragePath;
 }
