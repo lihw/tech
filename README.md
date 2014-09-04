@@ -18,7 +18,7 @@ The preferable develpoment platform is Windows 7 64bit with a discrete video car
 | OSX           | No            | Not supported|   Yes    |
 
 #Installation
-Use either `git clone https://github.com/lihw/tech-0.91alpha.git <dir>` or download the zip file at [https://github.com/lihw/tech/archive/tech-0.91a.zip](https://github.com/lihw/tech/archive/tech-0.91a.zip), and then uncompress the zip file to any dir you want. 
+Use either `git clone https://github.com/lihw/tech.git <dir>;git checkout 0.91a` or download the zip file at [https://github.com/lihw/tech/archive/0.91a.zip](https://github.com/lihw/tech/archive/0.91a.zip), and then uncompress the zip file to any dir you want. 
 
 **The path of installation dir should not include and blank spaces**
 
@@ -49,3 +49,14 @@ Add `<ANT installation dir>\bin;<Android NDK installation dir>\;<Android SDK ins
 
 ## Android dev on OSX
 Not supported yet.
+
+#Build
+
+## Windows
+1. Open <Dir>\tech\configs\msvc2012\tech.sln in MSVC2012, choose **Debug** profile and build. When finished, build the **Release** profile.
+2. Open <Dir>\tech\configs\android\ in dos window, and enter `build.bat debug`. When finished, enter `build.bat release`.
+
+## OSX
+1. Open <Dir>/tech/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
+
+
