@@ -60,3 +60,4 @@ Not supported yet.
 1. Open <Dir>/tech/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
 
 
+Please visit http://lihw.github.com/tech for release notes, API manual and milestones.
