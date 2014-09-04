@@ -3,10 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Tech by lihw</title>
+    <meta content="Future Interface's base library" name="description"/>
+    <meta content="Future Interface,Tech,Paper3D,Bamboo,Panel3D" name="keywords"/>
+    <title>Tech - the base library for all Future Interface's products</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> -->
     <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,9 +23,9 @@
       <div id="header">
         <nav>
           <li class="fork"><a href="https://github.com/lihw/tech">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/lihw/tech/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/lihw/tech/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
+          <li class="downloads"><a href="https://github.com/lihw/tech/archive/0.91a.zip">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/lihw/tech/archive/0.91a.tar.gz">TAR</a></li>
+          <li class="title">Latest version</li>
         </nav>
       </div><!-- end header -->
 
@@ -39,36 +41,55 @@
         </div>
 
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>The foundation library for all future interface products, like paper3d, panel3d and bamboo. It provides the a variety of useful helper classes, like container, algorithms, math, a C++ wrapper of OpenGL ES 2.0 and encapsulate the difference of each operating systems, so that above application layer can concentrate on the logic and content.</p>
 
 <h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a name="releasesplan" class="anchor" href="#releases"><span class="octicon octicon-link"></span></a>Releases</h3>
+<p><b>Version 0.93a (To be released at 2015-3-31)</b>
+<ul>
+	<li>OpenGL ES 3.0. 
+</ul>
+</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p><b>Version 0.92a (To be released at 2014-12-31)</b>
+<ul>
+	<li>PDictionary.
+	<li>Refined the event system with small memory footprint.
+	<li>X86 SSE and ARM Neon math support.
+</ul>
+</p>
+
+<p><b>Version 0.91a (The current version)</b>
+<ul>
+	<li>Support iOS 7.0, Android 4.2+ and Win32.
+	<li>OpenGL 2.0 ES.
+	<li>Many C++ containers and algorithms.
+	<li>Rich math library.
+	<li>Application lifecycle.
+	<li>Module framework.
+	<li>Gestures.
+	<li>Timer.
+	<li>Events.
+	<li>Property system.
+	<li>Future interface proprietary archive file format.
+	<li>Memory management.
+	<li>XML and ini parser.
+	<li>PNG, TGA image format supported.
+	<li>Logging and debug utility.
+	<li>File streaming.
+</p>
+</ul>
 
 <h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<a name="API manual" class="anchor" href="#api-manual"><span class="octicon octicon-link"></span></a>API manual</h3>
+<p>coming soon.</p>
 
 <h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a name="contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>You can either file an issue at git issue page or contact <a href="mailto:lihw81@gmail.com">lihw81@gmail.com</a> and we'll help you sort it out.</p>
       </section>
 
     </div>
