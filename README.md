@@ -3,6 +3,8 @@ tech
 
 The foundation library for all future interface products, like paper3d, panel3d and bamboo. It provides the a variety of useful helper classes, like container, algorithms, math, a C++ wrapper of OpenGL ES 2.0 and encapsulate the difference of each operating systems, so that above application layer can concentrate on the logic and content.
 
+Please visit http://lihw.github.com/tech for release notes, API manual and milestones.
+
 #Version
 The latest version is 0.91a.
 
@@ -60,4 +62,4 @@ Not supported yet.
 1. Open <Dir>/tech/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
 
 
-Please visit http://lihw.github.com/tech for release notes, API manual and milestones.
+
