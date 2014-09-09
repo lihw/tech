@@ -55,8 +55,10 @@ Not supported yet.
 #Build
 
 ## Windows
-1. Open <Dir>\tech\configs\msvc2012\tech.sln in MSVC2012, choose **Debug** profile and build. When finished, build the **Release** profile.
-2. Open <Dir>\tech\configs\android\ in dos window, and enter `build.bat debug`. When finished, enter `build.bat release`.
+### Build win32 libraries
+Open <Dir>\tech\configs\msvc2012\tech.sln in MSVC2012, choose **Debug** profile and build. When finished, build the **Release** profile.
+### Build Android libraries
+Open <Dir>\tech\configs\android\ in dos window, and enter `build.bat debug`. When finished, enter `build.bat release`.
 
 ## OSX
 1. Open <Dir>/tech/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
