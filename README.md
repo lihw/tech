@@ -61,7 +61,8 @@ Open %FITECH%\configs\msvc2012\tech.sln in MSVC2012, choose **Debug** profile an
 Open %FITECH%\configs\android\ in dos window, and enter `build.bat debug`. When finished, enter `build.bat release`.
 
 ## OSX
-1. Open ${FITECH}/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
+### Build iOS libraries
+Open ${FITECH}/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
 
 
 
