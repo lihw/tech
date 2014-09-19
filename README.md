@@ -30,9 +30,9 @@ Use either `git clone https://github.com/lihw/tech.git <dir>;git checkout 0.91a`
 [http://www.microsoft.com/en-us/download/details.aspx?id=34673](http://www.microsoft.com/en-us/download/details.aspx?id=34673)
 
 ## OSX
-1. Run install.sh
+1. Run install.sh and **reboot** the system.
  
-## Android dev on Windows
+## Setup Android dev environment on Windows
 1. Install the Android SDK and Eclipse bundle 
 32bit: [http://dl.google.com/android/adt/adt-bundle-windows-x86-20131030.zip](http://dl.google.com/android/adt/adt-bundle-windows-x86-20131030.zip)
 64bit: TODO
@@ -49,17 +49,20 @@ ANT_HOME=`<ANT installation dir>`
 ANDROID_SDK=`<Android SDK path>`
 Add `<ANT installation dir>\bin;<Android NDK installation dir>\;<Android SDK installation dir>\platform-tools\` to PATH
 
-## Android dev on OSX
+## Setup Android dev environment on OSX
 Not supported yet.
 
 #Build
 
 ## Windows
-1. Open <Dir>\tech\configs\msvc2012\tech.sln in MSVC2012, choose **Debug** profile and build. When finished, build the **Release** profile.
-2. Open <Dir>\tech\configs\android\ in dos window, and enter `build.bat debug`. When finished, enter `build.bat release`.
+### Build win32 libraries
+Open %FITECH%\configs\msvc2012\tech.sln in MSVC2012, choose **Debug** profile and build. When finished, build the **Release** profile.
+### Build Android libraries
+Open %FITECH%\configs\android\ in dos window, and enter `build.bat debug`. When finished, enter `build.bat release`.
 
 ## OSX
-1. Open <Dir>/tech/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build.
+### Build iOS libraries
+Open ${FITECH}/configs/ios/Tech.xcodeproj, select **buildall** as active scheme and build for both Debug and Release configurations respectively.
 
 
 
