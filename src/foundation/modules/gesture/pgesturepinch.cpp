@@ -10,9 +10,6 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
-#include <PFoundation/pevent.h>
-#include <PFoundation/peventtype.h>
-#include <PFoundation/PContext.h>
 
 #include <math.h>
 
@@ -65,12 +62,9 @@ void PGesturePinch::touchDown(pint32 x, pint32 y, puint32 timeStamp, pint32 poin
         m_initialDistance = getDistance(m_initialPoints[0], m_initialPoints[1]);
         m_initialRadians = getRadians(m_initialPoints[0], m_initialPoints[1]);
 
-        PEvent* event = createEvent(P_EVENT__PINCH_BEGIN);
-
-        // TODO: Use Vector2I
-        event->setParameter(P_EVENTPARAMETER__PINCH_1ST_POINTER, (void*)m_initialPoints[0]);
-        event->setParameter(P_EVENTPARAMETER__PINCH_2ND_POINTER, (void*)m_initialPoints[1]);
-        event->queue(reinterpret_cast<PObject *>(P_NULL));
+        PGesturePinchHandler *handler = 
+                (PGesturePinchHandler *)m_manager->handler(P_GESTURE_TYPE_PINCH);
+        handler->onPinchBegin(m_initialPoints[0], m_initialPoints[1]);
     }
 }
 
@@ -103,14 +97,9 @@ void PGesturePinch::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 poin
 
         pfloat32 scaling = currentDistance / m_initialDistance;
 
-        // TODO: Use Vector2I
-        PEvent* event = createEvent(P_EVENT__PINCH);
-        event->setParameter(P_EVENTPARAMETER__PINCH_1ST_POINTER, (void*)m_points[0]);
-        event->setParameter(P_EVENTPARAMETER__PINCH_2ND_POINTER, (void*)m_points[1]);
-
-        event->setParameter(P_EVENTPARAMETER__PINCH_SCALING, scaling);
-        event->setParameter(P_EVENTPARAMETER__PINCH_ROTATION_RADIANS, rotateRadians);
-        event->queue(reinterpret_cast<PObject *>(P_NULL));
+        PGesturePinchHandler *handler = 
+                (PGesturePinchHandler *)m_manager->handler(P_GESTURE_TYPE_PINCH);
+        handler->onPinch(m_initialPoints[0], m_initialPoints[1], rotateRadians, scaling);
     }
 }
 
@@ -135,8 +124,9 @@ void PGesturePinch::touchUp(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
     {
         m_state = STATE_POSSIBLE;
 
-        PEvent* event = createEvent(P_EVENT__PINCH_END);
-        event->queue(reinterpret_cast<PObject *>(P_NULL));
+        PGesturePinchHandler *handler = 
+                (PGesturePinchHandler *)m_manager->handler(P_GESTURE_TYPE_PINCH);
+        handler->onPinchEnd();
     }
     else if (m_state == STATE_POSSIBLE)
     {

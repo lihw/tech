@@ -129,6 +129,38 @@ pfloat32 * P_APIENTRY pMatrix4x4Multiply(const pfloat32 *a, const pfloat32 *b, p
     return out;
 }
 
+pfloat32 * P_APIENTRY pMatrix4x4MultiplyMatrix3x3(const pfloat32 *a, const pfloat32 *b, pfloat32 *out)
+{
+    PASSERT(a != out && b != out);
+
+#if defined P_USE_SSE
+#elif defined P_USE_NEON
+#else
+    out[0] = a[0] * b[0] + a[4] * b[1] + a[8] * b[2]; 
+    out[1] = a[1] * b[0] + a[5] * b[1] + a[9] * b[2]; 
+    out[2] = a[2] * b[0] + a[6] * b[1] + a[10] * b[2]; 
+    out[3] = a[3] * b[0] + a[7] * b[1] + a[11] * b[2]; 
+    
+    out[4] = a[0] * b[3] + a[4] * b[4] + a[8] * b[5]; 
+    out[5] = a[1] * b[3] + a[5] * b[4] + a[9] * b[5]; 
+    out[6] = a[2] * b[3] + a[6] * b[4] + a[10] * b[5]; 
+    out[7] = a[3] * b[3] + a[7] * b[4] + a[11] * b[5]; 
+    
+    out[8]  = a[0] * b[6] + a[4] * b[7] + a[8] * b[8]; 
+    out[9]  = a[1] * b[6] + a[5] * b[7] + a[9] * b[8]; 
+    out[10] = a[2] * b[6] + a[6] * b[7] + a[10] * b[8]; 
+    out[11] = a[3] * b[6] + a[7] * b[7] + a[11] * b[8]; 
+    
+    out[12] = a[12]; 
+    out[13] = a[13]; 
+    out[14] = a[14]; 
+    out[15] = a[15]; 
+
+#endif
+
+    return out;
+}
+
 pfloat32 * P_APIENTRY pMatrix4x4RotateRxRyRz(pfloat32 *inout, pfloat32 rx, pfloat32 ry, pfloat32 rz)
 {
     pfloat32 tempMatrix1[16];

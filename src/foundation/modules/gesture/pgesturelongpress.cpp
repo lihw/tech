@@ -10,9 +10,6 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
-#include <PFoundation/pevent.h>
-#include <PFoundation/peventtype.h>
-#include <PFoundation/PContext.h>
 
 PGestureLongPress::PGestureLongPress(PGestureManager *manager, pfloat32 distanceThreshold, 
     puint32 intervalThreshold)
@@ -104,10 +101,9 @@ void PGestureLongPress::update(pfloat32 deltaTime)
 
         if (m_elapsedTime > m_intervalThreshold)
         {
-            PEvent* event = createEvent(P_EVENT__LONG_PRESS);
-            event->setParameter(P_EVENTPARAMETER__TOUCH_X, m_x);
-            event->setParameter(P_EVENTPARAMETER__TOUCH_Y, m_y);
-            event->queue(reinterpret_cast<PObject *>(P_NULL));
+            PGestureLongPressHandler *handler = 
+                (PGestureLongPressHandler *)m_manager->handler(P_GESTURE_TYPE_LONGPRESS);
+            handler->onLongPress(m_x, m_y);
 
             reset();
         }

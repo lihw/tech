@@ -16,7 +16,9 @@
 
 #include <math.h>
 
-#define P_GESTURE_PINCH_SIMULATION_ENABLED  (1)
+#if defined P_WIN32
+# define P_GESTURE_PINCH_SIMULATION_ENABLED  1
+#endif
 
 class PDevice;
 class PGesturePinchSimulator;

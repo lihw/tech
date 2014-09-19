@@ -10,9 +10,6 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
-#include <PFoundation/pevent.h>
-#include <PFoundation/peventtype.h>
-#include <PFoundation/PContext.h>
 
 PGestureFling::PGestureFling(PGestureManager* manager, pfloat32 distanceThreshold, pfloat32 velocityThreshold)
     : PAbstractGesture(manager, P_GESTURE_TYPE_FLING)
@@ -36,6 +33,7 @@ void PGestureFling::setVelocityThreshold(pfloat32 value)
 {
     m_velocityThreshold = value;
 }
+
 void PGestureFling::touchDown(pint32 x, pint32 y, puint32 timeStamp, pint32 pointer)
 {
     if (!m_enabled)
@@ -105,10 +103,8 @@ void PGestureFling::touchUp (pint32 x, pint32 y, puint32 timeStamp, pint32 point
     if (dx * dx + dy * dy > m_distanceThreshold * m_distanceThreshold &&
         vSq > m_velocityThreshold * m_velocityThreshold)
     {
-        PEvent* event = createEvent(P_EVENT__FLING);
-        event->setParameter(P_EVENTPARAMETER__FLING_VELOCITY_X, vx);
-        event->setParameter(P_EVENTPARAMETER__FLING_VELOCITY_Y, vy);
-        event->queue(reinterpret_cast<PObject *>(P_NULL));
+        PGestureFlingHandler *handler = (PGestureFlingHandler *)m_manager->handler(P_GESTURE_TYPE_FLING);
+        handler->onFling(vx, vy);
     }
 
     m_state = STATE_READY;

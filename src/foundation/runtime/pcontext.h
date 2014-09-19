@@ -89,15 +89,6 @@ protected:
     virtual pbool onKeyboard(PEvent *event);
     virtual pbool onTouch(PEvent *event);
     virtual pbool onUserEvent(PEvent *event);
-    virtual pbool onTap(PEvent *event);
-    virtual pbool onLongPress(PEvent *event);
-    virtual pbool onFling(PEvent *event);
-    virtual pbool onPanBegin(PEvent *event);
-    virtual pbool onPan(PEvent *event);
-    virtual pbool onPanEnd(PEvent *event);
-    virtual pbool onPinchBegin(PEvent *event);
-    virtual pbool onPinch(PEvent *event);
-    virtual pbool onPinchEnd(PEvent *event);
     virtual pbool onTimer(PEvent *event);
 
 private:

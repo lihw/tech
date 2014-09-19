@@ -27,9 +27,12 @@ public:
     void updateMouse(const pfloat32 x, const pfloat32 y);
 
     // Fetch the current 3x3 rotation matrix of this arcball.
-    const pfloat32* getRotationMatrixF() const;
+    const pfloat32* rotationMatrixF() const;
 
-    const PMatrix3x3 &getRotationMatrix() const;
+    const PMatrix3x3 &rotationMatrix() const;
+
+    P_INLINE const PQuaternion &rotation() const
+    { return m_rotation; }
 
 private:
     PQuaternion m_lastRotation;

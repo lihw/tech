@@ -30,6 +30,10 @@ pfloat32 * P_APIENTRY pMatrix4x4Subtract(const pfloat32 *a, const pfloat32 *b, p
 // out = a * b (out cant be either a or b for performance consideration)
 pfloat32 * P_APIENTRY pMatrix4x4Multiply(const pfloat32 *a, const pfloat32 *b, pfloat32 *out);
 
+// out = a * b (out cant be either a or b for performance consideration)
+// b is a matrix3x3 and expanded to a matrix4x4 as ((b, 0), (b,1))
+pfloat32 * P_APIENTRY pMatrix4x4MultiplyMatrix3x3(const pfloat32 *a, const pfloat32 *b, pfloat32 *out);
+
 // Create a translation matrix.
 pfloat32 * P_APIENTRY pMatrix4x4CreateTranslation(pfloat32 x,
     pfloat32 y,
@@ -76,7 +80,7 @@ pfloat32 * P_APIENTRY pMatrix4x4CreateRotationRz(pfloat32 radians, pfloat32 *out
 // Create a rotation matrix that first rotate with x axis, then with y axis and finally with z axis.
 pfloat32 * P_APIENTRY pMatrix4x4CreateRotationRzRyRx(pfloat32 rx, pfloat32 ry, pfloat32 rz, pfloat32 *out);
 
-// Create a rotation matrix that first rotate with z axis, then with y axis and finally with y axis.
+// Create a rotation matrix that first rotate with z axis, then with y axis and finally with x axis.
 pfloat32 * P_APIENTRY pMatrix4x4CreateRotationRxRyRz(pfloat32 rx, pfloat32 ry, pfloat32 rz, pfloat32 *out);
 
 // Create a rotation matrix that rotates with an axis for an angle.

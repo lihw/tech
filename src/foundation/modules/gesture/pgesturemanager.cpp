@@ -20,7 +20,16 @@
 #include <PFoundation/ptime.h>
 
 #include "pgesture_private.h"
+    
+PAbstractGestureHandler::PAbstractGestureHandler(void *data, PGestureTypeEnum type)
+{
+    m_type = type;
+    m_data = data;
+}
 
+PAbstractGestureHandler::~PAbstractGestureHandler()
+{
+}
 
 PGestureManager::PGestureManager(PContext *context)
     : PModule("gesture-manager", context)
@@ -30,6 +39,12 @@ PGestureManager::PGestureManager(PContext *context)
     m_gestures[P_GESTURE_TYPE_FLING]     = PNEW(PGestureFling(this));
     m_gestures[P_GESTURE_TYPE_PAN]       = PNEW(PGesturePan(this));
     m_gestures[P_GESTURE_TYPE_PINCH]     = PNEW(PGesturePinch(this));
+    
+    m_handlers[P_GESTURE_TYPE_TAP]       = P_NULL;
+    m_handlers[P_GESTURE_TYPE_LONGPRESS] = P_NULL;
+    m_handlers[P_GESTURE_TYPE_FLING]     = P_NULL;
+    m_handlers[P_GESTURE_TYPE_PAN]       = P_NULL;
+    m_handlers[P_GESTURE_TYPE_PINCH]     = P_NULL;
 }
 
 PGestureManager::~PGestureManager()
@@ -39,6 +54,12 @@ PGestureManager::~PGestureManager()
     PASSERT(m_gestures[P_GESTURE_TYPE_FLING] == P_NULL);
     PASSERT(m_gestures[P_GESTURE_TYPE_PAN] == P_NULL);
     PASSERT(m_gestures[P_GESTURE_TYPE_PINCH] == P_NULL);
+    
+    PASSERT(m_handlers[P_GESTURE_TYPE_TAP] == P_NULL);
+    PASSERT(m_handlers[P_GESTURE_TYPE_LONGPRESS] == P_NULL);
+    PASSERT(m_handlers[P_GESTURE_TYPE_FLING] == P_NULL);
+    PASSERT(m_handlers[P_GESTURE_TYPE_PAN] == P_NULL);
+    PASSERT(m_handlers[P_GESTURE_TYPE_PINCH] == P_NULL);
 }
 
 void PGestureManager::uninitialize()
@@ -48,6 +69,12 @@ void PGestureManager::uninitialize()
     PDELETE(m_gestures[P_GESTURE_TYPE_FLING]);
     PDELETE(m_gestures[P_GESTURE_TYPE_PAN]);
     PDELETE(m_gestures[P_GESTURE_TYPE_PINCH]);
+
+    PDELETE(m_handlers[P_GESTURE_TYPE_TAP]);
+    PDELETE(m_handlers[P_GESTURE_TYPE_LONGPRESS]);
+    PDELETE(m_handlers[P_GESTURE_TYPE_FLING]);
+    PDELETE(m_handlers[P_GESTURE_TYPE_PAN]);
+    PDELETE(m_handlers[P_GESTURE_TYPE_PINCH]);
 }
 
 void PGestureManager::update()
@@ -88,32 +115,83 @@ void PGestureManager::recognize(PEvent *event)
 
     if (eventType == P_EVENT__TOUCH_DOWN)
     {
-        m_gestures[P_GESTURE_TYPE_TAP]->touchDown(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_LONGPRESS]->touchDown(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_FLING]->touchDown(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_PAN]->touchDown(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_PINCH]->touchDown(x, y, timestamp, pointer);
+        if (m_handlers[P_GESTURE_TYPE_TAP] != P_NULL) 
+        {
+            m_gestures[P_GESTURE_TYPE_TAP]->touchDown(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_LONGPRESS] != P_NULL) 
+        {
+            m_gestures[P_GESTURE_TYPE_LONGPRESS]->touchDown(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_FLING] != P_NULL) 
+        {
+            m_gestures[P_GESTURE_TYPE_FLING]->touchDown(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_PAN] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_PAN]->touchDown(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_PINCH] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_PINCH]->touchDown(x, y, timestamp, pointer);
+        }
     }
     else if (eventType == P_EVENT__TOUCH_UP)
     {
         clamp(x, y);
 
-        m_gestures[P_GESTURE_TYPE_TAP]->touchUp(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_LONGPRESS]->touchUp(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_FLING]->touchUp(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_PAN]->touchUp(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_PINCH]->touchUp(x, y, timestamp, pointer);
+        if (m_handlers[P_GESTURE_TYPE_TAP] != P_NULL) 
+        {
+            m_gestures[P_GESTURE_TYPE_TAP]->touchUp(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_LONGPRESS] != P_NULL) 
+        {
+            m_gestures[P_GESTURE_TYPE_LONGPRESS]->touchUp(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_FLING] != P_NULL) 
+        {
+            m_gestures[P_GESTURE_TYPE_FLING]->touchUp(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_PAN] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_PAN]->touchUp(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_PINCH] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_PINCH]->touchUp(x, y, timestamp, pointer);
+        }
     }
     else if (eventType == P_EVENT__TOUCH_MOVE)
     {
         clamp(x, y);
 
-        m_gestures[P_GESTURE_TYPE_TAP]->touchMove(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_LONGPRESS]->touchMove(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_FLING]->touchMove(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_PAN]->touchMove(x, y, timestamp, pointer);
-        m_gestures[P_GESTURE_TYPE_PINCH]->touchMove(x, y, timestamp, pointer);
+        if (m_handlers[P_GESTURE_TYPE_TAP] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_TAP]->touchMove(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_LONGPRESS] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_LONGPRESS]->touchMove(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_FLING] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_FLING]->touchMove(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_PAN] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_PAN]->touchMove(x, y, timestamp, pointer);
+        }
+        if (m_handlers[P_GESTURE_TYPE_PINCH] != P_NULL)
+        {
+            m_gestures[P_GESTURE_TYPE_PINCH]->touchMove(x, y, timestamp, pointer);
+        }
     }
+}
+    
+void PGestureManager::addHandler(PAbstractGestureHandler *handler)
+{
+    PDELETE(m_handlers[handler->type()]);
+    m_handlers[handler->type()] = handler;
 }
 
 void PGestureManager::clamp(pint32 &refX, pint32 &refY)

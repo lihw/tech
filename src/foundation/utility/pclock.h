@@ -45,7 +45,7 @@ private:
     puint32     m_maxFps; // Maximum FPS.
     pfloat32    m_minMSPerFrame; // Minimum millisecond per frame
     pfloat32    m_scaling;
-    pbool        m_paused;
+    pbool       m_paused;
     puint32     m_timestamp; // The timestamp of this frame since system boots
     pfloat32    m_lastSleepingTime; // How many milliseconds we slept over in last frame.
 };

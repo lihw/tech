@@ -81,20 +81,14 @@ void PGesturePan::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
 
                 if (dx * dx + dy * dy > m_distanceThreshold * m_distanceThreshold)
                 {
-                    // Send the pan begin event
-                    PEvent* event = createEvent(P_EVENT__PAN_BEGIN);
-                    event->setParameter(P_EVENTPARAMETER__TOUCH_X, m_x);
-                    event->setParameter(P_EVENTPARAMETER__TOUCH_Y, m_y);
-                    event->queue(reinterpret_cast<PObject *>(P_NULL));
+                    PGesturePanHandler *handler = 
+                        (PGesturePanHandler *)m_manager->handler(P_GESTURE_TYPE_PAN);
+
+                    // Call pan begin handler.
+                    handler->onPanBegin(m_x, m_y);
     
-                    // Send the pan move event
-                    event = createEvent(P_EVENT__PAN);
-        
-                    event->setParameter(P_EVENTPARAMETER__TOUCH_X, x);
-                    event->setParameter(P_EVENTPARAMETER__TOUCH_Y, y);
-                    event->setParameter(P_EVENTPARAMETER__PAN_DELTA_X, x - m_x);
-                    event->setParameter(P_EVENTPARAMETER__PAN_DELTA_Y, y - m_y);
-                    event->queue(reinterpret_cast<PObject *>(P_NULL));
+                    // Call pan move handler.
+                    handler->onPan(m_x, m_y, x - m_x, y - m_y);
 
                     m_x = x;
                     m_y = y;
@@ -106,14 +100,10 @@ void PGesturePan::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
             break;
         case STATE_MOVING:
             {
-                // Send the pan move event
-                PEvent *event = createEvent(P_EVENT__PAN);
-    
-                event->setParameter(P_EVENTPARAMETER__TOUCH_X, x);
-                event->setParameter(P_EVENTPARAMETER__TOUCH_Y, y);
-                event->setParameter(P_EVENTPARAMETER__PAN_DELTA_X, x - m_x);
-                event->setParameter(P_EVENTPARAMETER__PAN_DELTA_Y, y - m_y);
-                event->queue(reinterpret_cast<PObject *>(P_NULL));
+                // Call pan move handler.
+                PGesturePanHandler *handler = 
+                    (PGesturePanHandler *)m_manager->handler(P_GESTURE_TYPE_PAN);
+                handler->onPan(m_x, m_y, x - m_x, y - m_y);
 
                 m_x = x;
                 m_y = y;
@@ -123,7 +113,6 @@ void PGesturePan::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
             }
             break;
         default:
-            PLOG_WARNING("Pan is not supposed to move now");
             break;
     } 
 }
@@ -142,24 +131,17 @@ void PGesturePan::touchUp(pint32 x, pint32 y, puint32 timeStamp, pint32 pointer)
     
     switch (m_state)
     {
-        case STATE_READY:
-            PLOG_WARNING("Pan is not supposed to end now");
-            break;
-        case STATE_POSSIBLE:
-            return;
         case STATE_MOVING:
             {
-                PEvent* event = createEvent(P_EVENT__PAN_END);
-                event->setParameter(P_EVENTPARAMETER__TOUCH_X, x);
-                event->setParameter(P_EVENTPARAMETER__TOUCH_Y, y);
-                event->setParameter(P_EVENTPARAMETER__PAN_DELTA_X, x - m_x);
-                event->setParameter(P_EVENTPARAMETER__PAN_DELTA_Y, y - m_y);
-                event->queue(reinterpret_cast<PObject *>(P_NULL));
+                // Call pan end handler.
+                PGesturePanHandler *handler = 
+                    (PGesturePanHandler *)m_manager->handler(P_GESTURE_TYPE_PAN);
+                handler->onPanEnd(m_x, m_y, x - m_x, y - m_y);
                 reset();
             }
             break;
         default:
-            PLOG_WARNING("Pan is not supposed to end now.");
+            break;
     }
 }
 

@@ -300,33 +300,6 @@ void PContext::dispatch(PEvent *event)
         case P_EVENT__TOUCH_UP:
             onTouch(event);
             break;
-        case P_EVENT__TAP:
-            onTap(event);
-            break;
-        case P_EVENT__PAN_BEGIN:
-            onPanBegin(event);
-            break;
-        case P_EVENT__PAN:
-            onPan(event);
-            break;
-        case P_EVENT__PAN_END:
-            onPanEnd(event);
-            break;
-        case P_EVENT__PINCH_BEGIN:
-            onPinchBegin(event);
-            break;
-        case P_EVENT__PINCH:
-            onPinch(event);
-            break;
-        case P_EVENT__PINCH_END:
-            onPinchEnd(event);
-            break;
-        case P_EVENT__FLING:
-            onFling(event);
-            break;
-        case P_EVENT__LONG_PRESS:
-            onLongPress(event);
-            break;
         case P_EVENT__TIMER_EXPIRED:
             onTimer(event);
             break;
@@ -357,51 +330,6 @@ void PContext::onPause()
 void PContext::onResume()
 {
     // Override me.
-}
-
-pbool PContext::onTap(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onLongPress (PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onFling(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onPanBegin(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onPan(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onPanEnd(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onPinchBegin(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onPinch(PEvent *event)
-{
-    return false;
-}
-
-pbool PContext::onPinchEnd(PEvent *event)
-{
-    return false;
 }
 
 pbool PContext::onTimer(PEvent *event)

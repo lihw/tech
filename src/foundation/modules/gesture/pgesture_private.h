@@ -154,7 +154,7 @@ public:
 
 private:
     puint32     m_firstTapTime;
-    puint32     m_firstPoint[2];
+    pint32      m_firstPoint[2];
     pfloat32    m_distanceThreshold;
     puint32     m_intervalThreshold;
     puint32     m_tapCount;

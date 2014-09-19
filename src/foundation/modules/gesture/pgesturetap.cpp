@@ -10,9 +10,6 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
-#include <PFoundation/pevent.h>
-#include <PFoundation/peventtype.h>
-#include <PFoundation/PContext.h>
 
 PGestureTap::PGestureTap(PGestureManager* manager, pfloat32 distanceThreshold, 
     puint32 intervalThreshold)
@@ -95,12 +92,10 @@ void PGestureTap::touchUp (pint32 x, pint32 y, puint32 timeStamp, pint32 pointer
             dx * dx + dy * dy < dThresholdSquare)
         {
             m_tapCount++;
-            PEvent* event = createEvent(P_EVENT__TAP);
-            event->setParameter(P_EVENTPARAMETER__TOUCH_X, x);
-            event->setParameter(P_EVENTPARAMETER__TOUCH_Y, y);
-            event->setParameter(P_EVENTPARAMETER__TAPCOUNT, (pint32)m_tapCount);
-            
-            event->queue(reinterpret_cast<PObject *>(P_NULL));
+
+            PGestureTapHandler *handler = 
+                    (PGestureTapHandler *)m_manager->handler(P_GESTURE_TYPE_TAP);
+            handler->onTap(x, y, m_tapCount);
         }
         else
         {

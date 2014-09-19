@@ -34,7 +34,7 @@ public:
 
     // Enable the snapping. By default, the snapping is enabled.
     // \param flag true to enable and false to disable.
-    void enableSnapping(bool flag);
+    void enableSnapping(pbool flag);
 
     // Is the snapping enabled.
     // \return true when enabled.

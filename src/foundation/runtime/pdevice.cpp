@@ -83,7 +83,6 @@ void PDevice::update()
                         
                         PEvent* event = m_context->eventManager()->createEvent(type, P_NULL);
                         
-
                         // Touch event
                         event->setParameter(P_EVENTPARAMETER__TOUCH_CURSOR_ID, (pint32)touchEvent->getCursor(i)->m_id);
                         event->setParameter(P_EVENTPARAMETER__TOUCH_X, (pint32)touchEvent->getCursor(i)->m_x);
@@ -91,7 +90,7 @@ void PDevice::update()
                         event->setParameter(P_EVENTPARAMETER__TOUCH_TIMESTAMP, (puint32)touchEvent->getCursor(i)->m_timestamp);
                         event->queue(reinterpret_cast<PObject *>(P_NULL));
 
-                         // Gesture
+                        // Gesture
                         m_context->gestureManager()->recognize(event);
                     }
                 }

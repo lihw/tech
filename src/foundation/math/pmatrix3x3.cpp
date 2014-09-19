@@ -74,6 +74,38 @@ pfloat32 * P_APIENTRY pMatrix3x3Multiply(const pfloat32 *a, const pfloat32 *b,
     return out;
 }
 
+pfloat32 * P_APIENTRY pMatrix3x3MultiplyMatrix4x4(const pfloat32 *a, const pfloat32 *b, pfloat32 *out)
+{
+    PASSERT(a != out && b != out);
+
+#if defined P_USE_SSE
+#elif defined P_USE_NEON
+#else
+    out[0] = a[0] * b[0] + a[3] * b[1] + a[6] * b[2]; 
+    out[1] = a[1] * b[0] + a[4] * b[1] + a[7] * b[2]; 
+    out[2] = a[2] * b[0] + a[5] * b[1] + a[8] * b[2]; 
+    
+    out[4] = a[0] * b[4] + a[3] * b[5] + a[6] * b[6]; 
+    out[5] = a[1] * b[4] + a[4] * b[5] + a[7] * b[6]; 
+    out[6] = a[2] * b[4] + a[5] * b[5] + a[8] * b[6]; 
+    
+    out[8] = a[0] * b[8] + a[3] * b[9] + a[6] * b[10]; 
+    out[9] = a[1] * b[8] + a[4] * b[9] + a[7] * b[10]; 
+    out[10] = a[2] * b[8] + a[5] * b[9] + a[8] * b[10]; 
+
+    out[3]  = b[3];
+    out[7]  = b[7];
+    out[11] = b[11];
+    out[15] = b[15];
+
+    out[12] = a[0] * b[12] + a[3] * b[13] + a[6] * b[14];
+    out[13] = a[1] * b[12] + a[4] * b[13] + a[7] * b[14];
+    out[14] = a[2] * b[12] + a[5] * b[13] + a[8] * b[14];
+#endif
+
+    return out;
+}
+
 pfloat32 * P_APIENTRY pMatrix3x3Add(const pfloat32 *a, const pfloat32 *b, pfloat32 *out)
 {
 

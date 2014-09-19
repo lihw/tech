@@ -49,7 +49,7 @@ void PScrollerSnap::enableSnapping(pbool flag)
     m_snapping = flag;
 }
 
-bool PScrollerSnap::isSnappingEnabled() const
+pbool PScrollerSnap::isSnappingEnabled() const
 {
     return m_snapping;
 }

@@ -420,7 +420,7 @@ void PWin32Window::mousePressEvent(pint32 x, pint32 y, pbool isCtrlHeld)
         PInputEventQueue* inputQueue = m_context->device()->getInputEventQueue();
 
         puint32 timestamp = pTimeGetCurrentTimestamp();
-
+       
         inputQueue->addPointerEvent(x,
                                     y,
                                     P_POINTING_DEVICE_STATE_DOWN, 
@@ -438,6 +438,7 @@ void PWin32Window::mouseMoveEvent(pint32 x, pint32 y, pbool isCtrlHeld)
 
         puint32 timestamp = pTimeGetCurrentTimestamp();
 
+       
         inputQueue->addPointerEvent(x,
                                     y,
                                     P_POINTING_DEVICE_STATE_DRAG, 

@@ -50,11 +50,11 @@ public:
 
     // Get the minimum of values.
     // \return the minimum of values.
-    pfloat32 getMinimum() const;
+    pfloat32 minimum() const;
 
     // Get the maximum of values.
     // \return the maximum of values.
-    pfloat32 getMaximum() const;
+    pfloat32 maximum() const;
 
     // Set the maximum time slice. The value update frequency is dependent
     // on this time slice.
@@ -63,26 +63,26 @@ public:
 
     // Get the time slice. 
     // \return the time slice.
-    pfloat32 getMaximumTimeStep() const;
+    pfloat32 maximumTimeStep() const;
 
     // Set to the repeat mode. The default mode is clamp mode. Only effective
     // when it is an under-damping motion.
     // The values will be wrap to the valid range when go out the range.
     // \param enabled true to set to the repeat mode and false to clamp mode.
-    void enableRepeat(bool enabled);
+    void enableRepeat(pbool enabled);
 
     // Check if the current mode is repeat.
     // \return true for yes.
-    bool isRepeatEnabled() const;
+    pbool isRepeatEnabled() const;
 
     // Set the current interpolated value.
     // \param value the new current value.
     // \param resetInterpolation reset the current speed to zero and restart the interpolation.
-    void setValue(pfloat32 value, bool resetInterpolation);
+    void setValue(pfloat32 value, pbool resetInterpolation);
 
     // Get the current interpolated value.
     // \return the current interpolated value.
-    pfloat32 getValue() const;
+    pfloat32 value() const;
 
     // Set the current speed of the spring.
     // \param speed the new current interpolated speed.
@@ -90,7 +90,7 @@ public:
     
     // Get the current speed of the spring.
     // \return the current interpolated speed.
-    pfloat32 getSpeed() const;
+    pfloat32 speed() const;
     
     // Modify the current speed of the spring by adding an delta value.
     // \param speedDelta the delta value to add to the current speed.
@@ -102,11 +102,11 @@ public:
     
     // Get the current target of the spring.
     // \return the current target.
-    pfloat32 getTarget() const;
+    pfloat32 target() const;
     
     // Get the normalize target value in the repeat mode. The target value is warped to the range.
     // \return the normalized target which is always in the range.
-    pfloat32 getTargetNormalized() const;
+    pfloat32 targetNormalized() const;
     
     // Modify the current target of the spring by adding an delta value.
     // \param targetDelta the delta value to add to the current target.
@@ -118,7 +118,7 @@ public:
 
     // Update the current interpolated value status.
     // \param elapsedTime the elapsed time since last update in milliseconds
-    void update(puint32 elapsedTime);
+    void update(pfloat32 elapsedTime);
 
 private:
     // Bogacki-Shampine algorithm. 
@@ -140,7 +140,7 @@ private:
     // The current speed.
     pfloat32 m_speed;
     // Is it repeating
-    bool m_isRepeated;
+    pbool m_isRepeated;
     // Damp ratio.
     pfloat32 m_dampRatio;
     // Angular frequency.

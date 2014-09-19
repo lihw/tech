@@ -64,7 +64,7 @@ pfloat32 * P_APIENTRY pQuaternionInverse(pfloat32 *inout);
 pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 x, pfloat32 y, pfloat32 z, pfloat32 *out);
 
 // Get a Euler angles from a quaternion.
-void P_APIENTRY pQuaternionGetRotation(pfloat32& anglex, pfloat32& angley, pfloat32& anglez, const pfloat32 *in);
+void P_APIENTRY pQuaternionGetRotation(const pfloat32 *in, pfloat32 &anglex, pfloat32 &angley, pfloat32 &anglez);
 
 // Get a quaternion from a rotation (rotate an angle with an axis)
 pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 angle, pfloat32 x, pfloat32 y, pfloat32 z, pfloat32 *out);
@@ -99,7 +99,7 @@ pfloat32 * P_APIENTRY pQuaternionSlerp(const pfloat32 *q1, const pfloat32 *q2, p
 #include <PFoundation/pmatrix3x3.h>
 #include <PFoundation/pmatrix4x4.h>
 
-class P_DLLEXPORT PQuaternion
+struct PQuaternion
 {
 public:
     pfloat32 m_q[4];

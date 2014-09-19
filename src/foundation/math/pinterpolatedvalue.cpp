@@ -50,12 +50,12 @@ void PInterpolatedValue::setRange(pfloat32 minimumValue, pfloat32 maximumValue)
     m_range[1] = maximumValue;
 }
 
-pfloat32 PInterpolatedValue::getMinimum() const
+pfloat32 PInterpolatedValue::minimum() const
 {
     return m_range[0];
 }
 
-pfloat32 PInterpolatedValue::getMaximum() const
+pfloat32 PInterpolatedValue::maximum() const
 {
     return m_range[1];
 }
@@ -65,33 +65,32 @@ void PInterpolatedValue::setMaximumTimeStep(pfloat32 timeStep)
     m_maxTimeStep = timeStep;
 }
 
-pfloat32 PInterpolatedValue::getMaximumTimeStep() const
+pfloat32 PInterpolatedValue::maximumTimeStep() const
 {
     return m_maxTimeStep;
 }
 
-void PInterpolatedValue::enableRepeat(bool enabled)
+void PInterpolatedValue::enableRepeat(pbool enabled)
 {
     m_isRepeated = enabled;
 }
 
-bool PInterpolatedValue::isRepeatEnabled() const
+pbool PInterpolatedValue::isRepeatEnabled() const
 {
     return m_isRepeated;
 }
 
-void PInterpolatedValue::setValue(pfloat32 value, bool resetInterpolation)
+void PInterpolatedValue::setValue(pfloat32 value, pbool resetInterpolation)
 {
     m_value = value;
     
     if (resetInterpolation)
     {
         m_speed = 0.0f;
-        m_target = value;
     }
 }
 
-pfloat32 PInterpolatedValue::getValue() const
+pfloat32 PInterpolatedValue::value() const
 {
     return m_value;
 }
@@ -101,7 +100,7 @@ void PInterpolatedValue::setSpeed(pfloat32 speed)
     m_speed = speed;
 }
     
-pfloat32 PInterpolatedValue::getSpeed() const
+pfloat32 PInterpolatedValue::speed() const
 {
     return m_speed;
 }
@@ -116,12 +115,12 @@ void PInterpolatedValue::setTarget(pfloat32 target)
     m_target = target;
 }
     
-pfloat32 PInterpolatedValue::getTarget() const
+pfloat32 PInterpolatedValue::target() const
 {
     return m_target;
 }
     
-pfloat32 PInterpolatedValue::getTargetNormalized() const
+pfloat32 PInterpolatedValue::targetNormalized() const
 {
     if (m_isRepeated)
     {
@@ -137,7 +136,7 @@ void PInterpolatedValue::modifyTarget(pfloat32 targetDelta)
     m_target += targetDelta;
 }
 
-void PInterpolatedValue::update(puint32 elapsedTime)
+void PInterpolatedValue::update(pfloat32 elapsedTime)
 {
     // Convert to second
     pfloat32 deltaTime = (pfloat32)elapsedTime * 0.001f;
@@ -225,7 +224,7 @@ pfloat32 PInterpolatedValue::integrateBS(pfloat32 deltaTime)
     pfloat32 higherPrecisionSpeed = P_BS_D1 * k1Speed + P_BS_D2 * k2Speed + P_BS_D3 * k3Speed + P_BS_D4 * k4Speed;
 
     // Convergence help. 
-    bool converged = false;
+    pbool converged = false;
 
     pfloat32 errorEstimate = pAbs(lowerPrecisionSpeed - higherPrecisionSpeed);
     pfloat32 errorScale = pMax(pMax(P_SCALE_MINIMUM, pAbs(m_target)), pAbs(m_value));

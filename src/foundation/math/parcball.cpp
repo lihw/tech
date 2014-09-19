@@ -63,6 +63,19 @@ void PArcball::updateMouse(const pfloat32 x, const pfloat32 y)
             quat[0] = quat[1] = quat[2] = quat[3] = 0.0f;
         }
 
+        PLOG_INFO("last: (%f, %f, %f)", 
+            m_lastArcballCoordinate.m_v[0], 
+            m_lastArcballCoordinate.m_v[1], 
+            m_lastArcballCoordinate.m_v[2]
+            );
+        PLOG_INFO("current: (%f, %f, %f)", 
+            m_arcballCoordinate.m_v[0], 
+            m_arcballCoordinate.m_v[1], 
+            m_arcballCoordinate.m_v[2]
+            );
+
+        PLOG_INFO("aixs: (%f, %f, %f)", perp[0], perp[1], perp[2]);
+
         // Accumulate the rotation.
         pQuaternionMultiply(quat, &m_lastRotation.m_q[0], &m_rotation.m_q[0]);
         
@@ -70,12 +83,12 @@ void PArcball::updateMouse(const pfloat32 x, const pfloat32 y)
     }
 }
 
-const pfloat32* PArcball::getRotationMatrixF() const
+const pfloat32* PArcball::rotationMatrixF() const
 {
     return &m_rotationMatrix.m_m[0];
 }
 
-const PMatrix3x3 &PArcball::getRotationMatrix() const
+const PMatrix3x3 &PArcball::rotationMatrix() const
 {
     return m_rotationMatrix;
 }

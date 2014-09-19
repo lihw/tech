@@ -24,6 +24,10 @@ pfloat32 * P_APIENTRY pMatrix3x3Copy(const pfloat32 *in, pfloat32 *out);
 // result = a * b. out can't be the same memory piece of a or b.
 pfloat32 * P_APIENTRY pMatrix3x3Multiply(const pfloat32 *a, const pfloat32 *b, pfloat32 *out);
 
+// result = a * b. out can't be the same memory piece of a or b.
+// b is a matrix4x4 and the return matrix is 4x3. The a is expanded to a 4x4 matrix as ((a,0),(0,1)).
+pfloat32 * P_APIENTRY pMatrix3x3MultiplyMatrix4x4(const pfloat32 *a, const pfloat32 *b, pfloat32 *out);
+
 // result = a + b
 pfloat32 * P_APIENTRY pMatrix3x3Add(const pfloat32 *a, const pfloat32 *b, pfloat32 *out);
 

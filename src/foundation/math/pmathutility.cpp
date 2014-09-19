@@ -13,3 +13,10 @@ pfloat32 P_APIENTRY pDegreesToRadians(pfloat32 degrees)
 {
     return degrees * P_PIOVER180;
 }
+
+puint32 P_APIENTRY pLerp(puint32 a, puint32 b, pfloat32 r)
+{
+    pfloat32 x = a;
+    pfloat32 d = (pfloat32)((pint32)b - (pint32)a);
+    return (puint32)(x + d * r);
+}
