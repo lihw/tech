@@ -38,4 +38,6 @@ pfloat32 P_APIENTRY pDegreesToRadians(pfloat32 degree);
 
 puint32 P_APIENTRY pLerp(puint32 a, puint32 b, pfloat32 r);
 
+pfloat32 P_APIENTRY pLerp(pfloat32 a, pfloat32 b, pfloat32 r);
+
 #endif // !PMATHUTILITY_H
