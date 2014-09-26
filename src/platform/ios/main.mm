@@ -14,24 +14,24 @@
 #include <PFoundation/pnew.h>
 #include <PFoundation/pcontext.h>
 
-#import "piosglview.h"
+#import "piosglviewcontroller.h"
 
 @interface PAppDelegate : UIResponder <UIApplicationDelegate> 
 {
-    UIWindow   *_mainWindow;
-    PIOSGLView *_mainView;
-    PActivity  *_activity;
+    UIWindow             *_mainWindow;
+    PIOSGLViewController *_mainViewController;
+    PActivity            *_activity;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *mainWindow;
-@property (nonatomic, retain) IBOutlet PIOSGLView *mainView;
+@property (nonatomic, retain) IBOutlet PIOSGLViewController *mainViewController;
 @end
 
 P_EXTERN void pMain(int argc, char* argv[]);
 
 @implementation PAppDelegate
-@synthesize mainView   = _mainView;
-@synthesize mainWindow = _mainWindow;
+@synthesize mainViewController   = _mainViewController;
+@synthesize mainWindow           = _mainWindow;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -61,14 +61,15 @@ P_EXTERN void pMain(int argc, char* argv[]);
     
 #if __has_feature(objc_arc)
     self.mainWindow = [[UIWindow alloc] initWithFrame:screenBounds];
-    self.mainView = [[PIOSGLView alloc] initWithFrame:screenBounds TechContext:context];
+    self.mainViewController = [[PIOSGLViewController alloc] initWithFrame:screenBounds TechContext:context];
 #else
-    self.mainWindow = [[UIWindow alloc] initWithFrame:screenBounds] autorelease];
-    self.mainView = [[[PIOSGLView alloc] initWithFrame:screenBounds TechContext:context]
-                   autorelease];
+    self.mainWindow = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
+    self.mainViewController = [[[PIOSGLViewController alloc] initWithFrame:screenBounds TechContext:context]
+                    autorelease];
 #endif
     
-    [self.mainWindow addSubview:_mainView];
+    //[self.mainWindow addSubview:_mainView];
+    [self.mainWindow setRootViewController:_mainViewController];
     
     [self.mainWindow makeKeyAndVisible];
         
@@ -139,10 +140,10 @@ P_EXTERN void pMain(int argc, char* argv[]);
 - (void)dealloc
 {
 #if __has_feature(objc_arc)
-    _mainView = nil;
+    _mainViewController = nil;
     _mainWindow = nil;
 #else
-    [_mainView release];
+    [_mainViewController release];
     [_mainWindow release];
     [super dealloc];
 #endif
@@ -150,6 +151,7 @@ P_EXTERN void pMain(int argc, char* argv[]);
 
 @end
 
+/*
 int main(int argc, char* argv[])
 {
     @autoreleasepool
@@ -158,3 +160,4 @@ int main(int argc, char* argv[])
         return retVal;
     }
 }
+*/

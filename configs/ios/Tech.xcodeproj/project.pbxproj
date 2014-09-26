@@ -39,6 +39,7 @@
 		EDA11075199B16E3006E2216 /* peventmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF44ED199900240094AEE9 /* peventmanager.cpp */; };
 		EDA11076199B16E3006E2216 /* peventparameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF44EF199900240094AEE9 /* peventparameters.cpp */; };
 		EDA11077199B16E3006E2216 /* peventtype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF44F1199900240094AEE9 /* peventtype.cpp */; };
+		EDA4C54619D02BA400245BE2 /* piosglviewcontroller.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDA4C54519D02BA400245BE2 /* piosglviewcontroller.mm */; };
 		EDAEF57D199848A400EC8C71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDAEF552199847D000EC8C71 /* Foundation.framework */; };
 		EDAF45E9199900340094AEE9 /* parchivefile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF4484199900240094AEE9 /* parchivefile.cpp */; };
 		EDAF45EA199900430094AEE9 /* parray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF4488199900240094AEE9 /* parray.cpp */; };
@@ -152,6 +153,8 @@
 		ED9C48871999E2DE0083A14B /* libplatform.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libplatform.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED9C48AD1999EDAE0083A14B /* piosglview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = piosglview.h; sourceTree = "<group>"; };
 		ED9C48AE1999EDAE0083A14B /* piosglview.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = piosglview.mm; sourceTree = "<group>"; };
+		EDA4C54419D02BA400245BE2 /* piosglviewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = piosglviewcontroller.h; sourceTree = "<group>"; };
+		EDA4C54519D02BA400245BE2 /* piosglviewcontroller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = piosglviewcontroller.mm; sourceTree = "<group>"; };
 		EDAEF552199847D000EC8C71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EDAEF560199847D000EC8C71 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		EDAEF563199847D000EC8C71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -403,6 +406,8 @@
 		ED9C48781999E2A30083A14B /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				EDA4C54419D02BA400245BE2 /* piosglviewcontroller.h */,
+				EDA4C54519D02BA400245BE2 /* piosglviewcontroller.mm */,
 				ED9C48AD1999EDAE0083A14B /* piosglview.h */,
 				ED9C48AE1999EDAE0083A14B /* piosglview.mm */,
 				ED9C48791999E2A30083A14B /* main.mm */,
@@ -947,6 +952,7 @@
 				EDAF4654199990E90094AEE9 /* piospath.mm in Sources */,
 				EDAF463B1999011C0094AEE9 /* pscroller.cpp in Sources */,
 				EDAF45EA199900430094AEE9 /* parray.cpp in Sources */,
+				EDA4C54619D02BA400245BE2 /* piosglviewcontroller.mm in Sources */,
 				EDAF45F9199900A50094AEE9 /* pimagetga.cpp in Sources */,
 				EDAF463A1999011C0094AEE9 /* pconststring.cpp in Sources */,
 				EDAF4616199900DE0094AEE9 /* pobject.cpp in Sources */,

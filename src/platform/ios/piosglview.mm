@@ -41,7 +41,7 @@
     
     // FIXME: restore the renderbuffer binding after present?
     glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
-    [_context presentRenderbuffer:GL_RENDERBUFFER];
+    [_context presentRenderbuffer:GL_RENDERBUFFER];    
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -61,8 +61,8 @@
         self.contentScaleFactor = contentScale;
         
         // Setup the layer
-        _eaglLayer = (CAEAGLLayer*) self.layer;
-        _eaglLayer.opaque = YES;
+        _eaglLayer = (CAEAGLLayer*)self.layer;
+        _eaglLayer.opaque = NO;
         _eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
                                         kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
         _eaglLayer.contentsScale = contentScale;
@@ -95,7 +95,6 @@
         glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, renderbufferWidth, renderbufferHeight);
         
-        
         // Setup the default framebuffer object.
         glGenFramebuffers(1, &_framebuffer);
         glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer);
@@ -103,7 +102,7 @@
             GL_RENDERBUFFER, _colorRenderBuffer);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, 
             GL_RENDERBUFFER, _depthRenderBuffer);
-        
+
         // Initialize the Tech context.
         if (!_pcontext->initialize(renderbufferWidth, renderbufferHeight))
         {

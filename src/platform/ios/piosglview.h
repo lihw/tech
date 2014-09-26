@@ -7,8 +7,8 @@
 // Hongwei Li lihw81@gmail.com
 //
 
-#ifndef PISO32GLVIEW_H
-#define PISO32GLVIEW_H
+#ifndef PISOGLVIEW_H
+#define PISOGLVIEW_H
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
@@ -31,4 +31,4 @@ class PContext;
 
 @end
 
-#endif //!PISO32GLVIEW_H
+#endif //!PISOGLVIEW_H
