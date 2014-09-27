@@ -49,7 +49,7 @@ PImage::PImage(const pchar *path, PInputStream &inputStream)
         {
             if (!pImagePNGRead(inputStream, m_width, m_height, m_pixelFormat, m_data))
             {
-                PLOG_ERROR("Failed to read PNG image %s", path);
+                PLOG_ERROR("Failed to read PNG image %s.", path);
 
                 m_width = 0;
                 m_height = 0;
@@ -64,7 +64,7 @@ PImage::PImage(const pchar *path, PInputStream &inputStream)
         {
             if (!pImageTGARead(inputStream, m_width, m_height, m_pixelFormat, m_data))
             {
-                PLOG_ERROR("Failed to read TGA image %s", path);
+                PLOG_ERROR("Failed to read TGA image %s.", path);
 
                 m_width = 0;
                 m_height = 0;

@@ -179,27 +179,28 @@ pbool pImageRleRead(RLEstate *rleInfo, puint8 *buffer, puint32 datasize, puint32
 pbool P_APIENTRY pImageTGARead(PInputStream& inputStream, puint32& width, puint32& height, 
     PImagePixelFormatEnum& format, puint8*& data)
 {
-    TgaFooter tgaFooter;
+    //TgaFooter tgaFooter;
     TgaHeader tgaHeader;
     puint32 bpp;
     
-    // Check the footer.
-    inputStream.seek(inputStream.getSize() - TGA_SIGNATURE_SIZE);
-    if (!inputStream.readBytes(TGA_SIGNATURE_SIZE, (puint8 *)&tgaFooter))
-    {
-        PLOG_ERROR("TGA: Cannot read tga footer from inputstream.\n");
-        return false;
-    }  
-    
-    // Check the signature.
-    if (pmemcmp(tgaFooter.signature, TGA_SIGNATURE, sizeof(tgaFooter.signature)) != 0) 
-    {
-        PLOG_ERROR("TGA: not a valid TGA image (incorrect signature).\n");
-        return false;
-    }
-
+    // FIXME: footer seems not a TGA spec.
+    //// Check the footer.
+    //inputStream.seek(inputStream.getSize() - TGA_SIGNATURE_SIZE);
+    //if (!inputStream.readBytes(TGA_SIGNATURE_SIZE, (puint8 *)&tgaFooter))
+    //{
+    //    PLOG_ERROR("TGA: Cannot read tga footer from inputstream.\n");
+    //    return false;
+    //}  
+    //
+    //// Check the signature.
+    //if (pmemcmp(tgaFooter.signature, TGA_SIGNATURE, sizeof(tgaFooter.signature)) != 0) 
+    //{
+    //    PLOG_ERROR("TGA: not a valid TGA image (incorrect signature).\n");
+    //    return false;
+    //}
     // Read the header.
-    inputStream.seek(0);
+    //inputStream.seek(0);
+    
     if (!inputStream.readBytes(sizeof(tgaHeader), (puint8 *)&tgaHeader))
     {
         PLOG_ERROR("TGA: Cannot read tga header from inputstream.\n");
@@ -428,6 +429,7 @@ pbool P_APIENTRY pImageTGARead(PInputStream& inputStream, puint32& width, puint3
 
         if (pelbytes >= 3)
         {
+            // TODO: don't rearrange the RGB, but output the pixel format.
             // Rearrange the colors from BGR to RBG.
             puint8 tmp;
             for (puint32 j = 0; j < width * pelbytes; j += pelbytes) 
@@ -459,17 +461,17 @@ pbool P_APIENTRY pImageTGARead(PInputStream& inputStream, puint32& width, puint3
         PDELETEARRAY(rleInfo->statebuf);
     }
 
+    // FIXME: seems the footer is not supported by TGA unversally
     // FROMv01: not finish reading.
     // Read the footer.
-    if (!inputStream.readBytes(TGA_SIGNATURE_SIZE, (puint8 *)&tgaFooter))
-    {
-        PLOG_ERROR("TGA: Cannot read tga footer from inputstream.\n");
-    }
-
-    if (!inputStream.isEndOfStream())
-    {
-        PLOG_ERROR("TGA: too much input data, ignoring extra...\n");
-    }
+    //if (!inputStream.readBytes(TGA_SIGNATURE_SIZE, (puint8 *)&tgaFooter))
+    //{
+    //    PLOG_ERROR("TGA: Cannot read tga footer from inputstream.\n");
+    //}
+    //if (!inputStream.isEndOfStream())
+    //{
+    //    PLOG_ERROR("TGA: too much input data, ignoring extra...\n");
+    //}
 
     // FIXME: we can not return a color map.
     PASSERT(cmap == P_NULL);

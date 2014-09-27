@@ -11,9 +11,7 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
-#include <PFoundation/pevent.h>
-#include <PFoundation/peventtype.h>
-#include <PFoundation/PContext.h>
+#include <PFoundation/pcontext.h>
 
 PGesturePan::PGesturePan(PGestureManager* manager, pfloat32 distanceThreshold)
     : PAbstractGesture(manager, P_GESTURE_TYPE_PAN)
@@ -81,14 +79,11 @@ void PGesturePan::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
 
                 if (dx * dx + dy * dy > m_distanceThreshold * m_distanceThreshold)
                 {
-                    PGesturePanHandler *handler = 
-                        (PGesturePanHandler *)m_manager->handler(P_GESTURE_TYPE_PAN);
-
-                    // Call pan begin handler.
-                    handler->onPanBegin(m_x, m_y);
+                    // Call pan begin.
+                    m_manager->context()->onPanBegin(m_x, m_y);
     
-                    // Call pan move handler.
-                    handler->onPan(m_x, m_y, x - m_x, y - m_y);
+                    // Call pan move.
+                    m_manager->context()->onPan(m_x, m_y, x - m_x, y - m_y);
 
                     m_x = x;
                     m_y = y;
@@ -100,10 +95,8 @@ void PGesturePan::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
             break;
         case STATE_MOVING:
             {
-                // Call pan move handler.
-                PGesturePanHandler *handler = 
-                    (PGesturePanHandler *)m_manager->handler(P_GESTURE_TYPE_PAN);
-                handler->onPan(m_x, m_y, x - m_x, y - m_y);
+                // Call pan move.
+                m_manager->context()->onPan(m_x, m_y, x - m_x, y - m_y);
 
                 m_x = x;
                 m_y = y;
@@ -133,10 +126,8 @@ void PGesturePan::touchUp(pint32 x, pint32 y, puint32 timeStamp, pint32 pointer)
     {
         case STATE_MOVING:
             {
-                // Call pan end handler.
-                PGesturePanHandler *handler = 
-                    (PGesturePanHandler *)m_manager->handler(P_GESTURE_TYPE_PAN);
-                handler->onPanEnd(m_x, m_y, x - m_x, y - m_y);
+                // Call pan end.
+                m_manager->context()->onPanEnd(m_x, m_y, x - m_x, y - m_y);
                 reset();
             }
             break;

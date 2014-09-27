@@ -10,6 +10,7 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
+#include <PFoundation/pcontext.h>
 
 #include <math.h>
 
@@ -62,9 +63,7 @@ void PGesturePinch::touchDown(pint32 x, pint32 y, puint32 timeStamp, pint32 poin
         m_initialDistance = getDistance(m_initialPoints[0], m_initialPoints[1]);
         m_initialRadians = getRadians(m_initialPoints[0], m_initialPoints[1]);
 
-        PGesturePinchHandler *handler = 
-                (PGesturePinchHandler *)m_manager->handler(P_GESTURE_TYPE_PINCH);
-        handler->onPinchBegin(m_initialPoints[0], m_initialPoints[1]);
+        m_manager->context()->onPinchBegin(m_initialPoints[0], m_initialPoints[1]);
     }
 }
 
@@ -97,9 +96,7 @@ void PGesturePinch::touchMove(pint32 x, pint32 y, puint32 timeStamp, pint32 poin
 
         pfloat32 scaling = currentDistance / m_initialDistance;
 
-        PGesturePinchHandler *handler = 
-                (PGesturePinchHandler *)m_manager->handler(P_GESTURE_TYPE_PINCH);
-        handler->onPinch(m_initialPoints[0], m_initialPoints[1], rotateRadians, scaling);
+        m_manager->context()->onPinch(m_initialPoints[0], m_initialPoints[1], rotateRadians, scaling);
     }
 }
 
@@ -124,9 +121,7 @@ void PGesturePinch::touchUp(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
     {
         m_state = STATE_POSSIBLE;
 
-        PGesturePinchHandler *handler = 
-                (PGesturePinchHandler *)m_manager->handler(P_GESTURE_TYPE_PINCH);
-        handler->onPinchEnd();
+        m_manager->context()->onPinchEnd();
     }
     else if (m_state == STATE_POSSIBLE)
     {

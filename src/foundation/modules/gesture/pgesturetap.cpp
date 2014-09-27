@@ -10,6 +10,7 @@
 #include "pgesture_private.h"
 
 #include <PFoundation/pgesturemanager.h>
+#include <PFoundation/pcontext.h>
 
 PGestureTap::PGestureTap(PGestureManager* manager, pfloat32 distanceThreshold, 
     puint32 intervalThreshold)
@@ -93,9 +94,7 @@ void PGestureTap::touchUp (pint32 x, pint32 y, puint32 timeStamp, pint32 pointer
         {
             m_tapCount++;
 
-            PGestureTapHandler *handler = 
-                    (PGestureTapHandler *)m_manager->handler(P_GESTURE_TYPE_TAP);
-            handler->onTap(x, y, m_tapCount);
+            m_manager->context()->onTap(x, y, m_tapCount);
         }
         else
         {
