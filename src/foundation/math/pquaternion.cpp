@@ -77,7 +77,16 @@ pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 x, pfloat32 y, pfloat32
 
 pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 angle, pfloat32 x, pfloat32 y, pfloat32 z, pfloat32* out)
 {
-    PASSERT_NOTIMPLEMENTED();
+    pfloat32 s = sinf(angle * 0.5f);
+    pfloat32 i[3] = { x, y, z };
+    pfloat32 o[3];
+    pVector3Normalize(i, o);
+
+    out[0] = s * o[0];
+    out[1] = s * o[1];
+    out[2] = s * o[2];
+    out[3] = sqrtf(1.0f - s * s);
+
     return out;
 }
 
@@ -128,7 +137,7 @@ void P_APIENTRY pQuaternionGetRotation(const pfloat32 *in, pfloat32 &anglex,
     pfloat32 f22 = 1.0f - 2.0f * q1 * q1 - 2.0f * q2 * q2;
 
     anglex = atan2f(f21, f22);
-    angley = asinf(-f20);
+    angley = asinf(f20);
     anglez = atan2f(f10, f00);
 }
 

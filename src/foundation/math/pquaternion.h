@@ -60,7 +60,7 @@ pfloat32 * P_APIENTRY pQuaternionMultiply(const pfloat32 *a, const pfloat32 *b, 
 // Inverse a quaternion 
 pfloat32 * P_APIENTRY pQuaternionInverse(pfloat32 *inout);
 
-// Get a quaternion from Euler angles, created by Rz * Ry * Rx
+// Get a quaternion from Euler angles, created by Rx * Ry * Rz (rotate with z first and x last)
 pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 x, pfloat32 y, pfloat32 z, pfloat32 *out);
 
 // Get a Euler angles from a quaternion.

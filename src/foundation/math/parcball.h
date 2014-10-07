@@ -28,19 +28,21 @@ public:
 
     // Fetch the current 3x3 rotation matrix of this arcball.
     const pfloat32* rotationMatrixF() const;
-
     const PMatrix3x3 &rotationMatrix() const;
-
-    P_INLINE const PQuaternion &rotation() const
-    { return m_rotation; }
+    // Return the rotation quaternion of this arcball.
+    P_INLINE const PQuaternion &rotation() const { return m_rotation; }
+    // Return the rotation of this mouse movement (from restart() to current).
+    P_INLINE const PQuaternion &deltaRotation() const { return m_deltaRotation; }
 
 private:
-    PQuaternion m_lastRotation;
-    PQuaternion m_rotation;
-    PMatrix3x3  m_rotationMatrix;
-    PVector3    m_lastArcballCoordinate;
-    PVector3    m_arcballCoordinate;
-    pbool       m_moving; // In moving mode, the rotation matrix keeps updating.
+    PQuaternion         m_rotation;
+    PQuaternion         m_lastRotation;
+    PQuaternion         m_deltaRotation;
+    mutable PMatrix3x3  m_rotationMatrix;
+    PVector3            m_lastArcballCoordinate;
+    PVector3            m_arcballCoordinate;
+    pbool               m_moving; // In moving mode, the rotation matrix keeps updating.
+    
 
     // Map the viewport coordinate mouse position to the sphere coordinate.
     void mapToSphere(const pfloat32 x, const pfloat32 y, pfloat32* coordinate);

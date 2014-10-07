@@ -15,8 +15,6 @@
 PArcball::PArcball()
 {
     m_moving = false;
-
-    m_rotationMatrix.identity();
 }
     
 PArcball::~PArcball()
@@ -26,7 +24,6 @@ PArcball::~PArcball()
 void PArcball::restart()
 {
     m_moving = false;
-
     m_lastRotation = m_rotation;
 }
 
@@ -35,6 +32,7 @@ void PArcball::updateMouse(const pfloat32 x, const pfloat32 y)
     if (!m_moving)
     {
         mapToSphere(x, y, &m_lastArcballCoordinate.m_v[0]);
+        pQuaternionIdentity(m_deltaRotation.m_q);
         m_moving = true;
     }
     else
@@ -49,47 +47,31 @@ void PArcball::updateMouse(const pfloat32 x, const pfloat32 y)
         // Compute the rotating quaternion
         pfloat32 l = perp.length();
 
-        pfloat32 quat[4];
-
         if (l > 1e-4f) 
         {
-            quat[0] = perp[0];
-            quat[1] = perp[1];
-            quat[2] = perp[2];
-            quat[3] = m_lastArcballCoordinate.dot(m_arcballCoordinate); 
+            m_deltaRotation.m_q[0] = perp[0];
+            m_deltaRotation.m_q[1] = perp[1];
+            m_deltaRotation.m_q[2] = perp[2];
+            m_deltaRotation.m_q[3] = m_lastArcballCoordinate.dot(m_arcballCoordinate); 
         } 
         else 
         {
-            quat[0] = quat[1] = quat[2] = quat[3] = 0.0f;
+            pQuaternionIdentity(m_deltaRotation.m_q);
         }
 
-        PLOG_INFO("last: (%f, %f, %f)", 
-            m_lastArcballCoordinate.m_v[0], 
-            m_lastArcballCoordinate.m_v[1], 
-            m_lastArcballCoordinate.m_v[2]
-            );
-        PLOG_INFO("current: (%f, %f, %f)", 
-            m_arcballCoordinate.m_v[0], 
-            m_arcballCoordinate.m_v[1], 
-            m_arcballCoordinate.m_v[2]
-            );
-
-        PLOG_INFO("aixs: (%f, %f, %f)", perp[0], perp[1], perp[2]);
-
-        // Accumulate the rotation.
-        pQuaternionMultiply(quat, &m_lastRotation.m_q[0], &m_rotation.m_q[0]);
-        
-        pQuaternionGetMatrix3x3(&m_rotation.m_q[0], &m_rotationMatrix.m_m[0]);
+        pQuaternionMultiply(m_lastRotation.m_q, m_deltaRotation.m_q, m_rotation.m_q);
     }
 }
 
 const pfloat32* PArcball::rotationMatrixF() const
 {
+    pQuaternionGetMatrix3x3(&m_rotation.m_q[0], &m_rotationMatrix.m_m[0]);
     return &m_rotationMatrix.m_m[0];
 }
 
 const PMatrix3x3 &PArcball::rotationMatrix() const
 {
+    pQuaternionGetMatrix3x3(&m_rotation.m_q[0], &m_rotationMatrix.m_m[0]);
     return m_rotationMatrix;
 }
 
