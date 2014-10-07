@@ -65,6 +65,7 @@ public:
     PVector3 rotation() const;
     void setRotation(pfloat32 angle, pfloat32 x, pfloat32 y, pfloat32 z);
     void setRotation(pfloat32 angle, const PLine &line);
+    void setQuaternion(pfloat32 x, pfloat32 y, pfloat32 z, pfloat32 w);
 
     void setScalingX(pfloat32 x);
     void setScalingY(pfloat32 y);
@@ -76,16 +77,14 @@ public:
     PVector3 scaling() const;
 
     void setLookAt(pfloat32 eyex, pfloat32 eyey, pfloat32 eyez,
-                pfloat32 centerx, pfloat32 centery, pfloat32 centerz,
-                pfloat32 upx, pfloat32 upy, pfloat32 upz);
+                   pfloat32 centerx, pfloat32 centery, pfloat32 centerz,
+                   pfloat32 upx, pfloat32 upy, pfloat32 upz);
 
     // The parameter changed indicate whether the transform matrix has been update since the last
     // time when getMatrix is called.
     const PMatrix4x4 &toMatrix4x4(pbool *changed) const;
     // To a camera transform matrix
     const PMatrix4x4 toCameraMatrix4x4() const;
-    void setMatrix4x4(const pfloat32 *matrix);
-    void operator=(const PMatrix4x4 &matrix);
 
 protected:
     virtual PPropertyNameIndexMap *propertyNameIndexMap() const;

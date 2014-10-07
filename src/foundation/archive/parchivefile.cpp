@@ -10,6 +10,8 @@
 #include "parchivefile.h"
 
 #include <PFoundation/passet.h>
+#include <PFoundation/poutputstream.h>
+
 
 PArchiveFile::PArchiveFile()
 {
@@ -92,12 +94,12 @@ pbool PArchiveFile::load(const pchar *filePath)
     return true;
 }
 
-puint32 PArchiveFile::getNumberOfFiles() const
+puint32 PArchiveFile::numberOfFiles() const
 {
     return m_entries.count();
 }
 
-void PArchiveFile::getFilenames(PArray<PString> &out_filenames) const
+void PArchiveFile::filenames(PArray<PString> &out_filenames) const
 {
     for (puint32 i = 0; i < m_entries.size(); ++i)
     {
@@ -122,6 +124,7 @@ pbool PArchiveFile::createInputStream(const pchar *filePath,
         return out_inputStream->createFromFile(filePath, P_STREAM_ENDIANNESS_PLATFORM);
     }
 
+    // TODO: use stream of asset instead of stream of memory.
     puint8 *buffer = PNEWARRAY(puint8, entry->fileSize);
     PAsset asset = pAssetOpen(m_archivePath.c_str());
     if (!pAssetIsValid(&asset))
@@ -151,6 +154,58 @@ pbool PArchiveFile::createInputStream(const pchar *filePath,
 pbool PArchiveFile::isPathInArchive(const pchar *filePath) const
 {
     return findEntry(filePath) != P_NULL;
+}
+
+pbool PArchiveFile::uncompress(const pchar *filePath, const pchar *destinationPath)
+{
+    const PArchiveEntry *entry = findEntry(filePath);
+    
+    if (entry == P_NULL)
+    {
+        PLOG_ERROR("Could not find file %s in the archive.", filePath);
+        return false;
+    }
+    
+    PAsset asset = pAssetOpen(m_archivePath.c_str());
+    if (!pAssetIsValid(&asset))
+    {
+        PLOG_ERROR("Not a valid asset archive file: %s.", filePath);
+        return false;
+    }
+    pAssetSeek(&asset, entry->byteOffset, P_FILE_SEEK_FROM_BEGINNING);
+    
+    POutputStream outputStream;
+    outputStream.createFromFile(destinationPath, P_STREAM_ENDIANNESS_PLATFORM);
+
+    puint8 bytes[1024];
+    puint32 nbytes = entry->fileSize;
+    if (entry->fileSize > 1024)
+    {
+        puint32 i;
+        for (i = 0; i < entry->fileSize; i += 1024)
+        {
+            if (pAssetRead(&asset, bytes, 1024) != 1024)
+            {
+                PLOG_ERROR("Failed to read archive entry %s.", entry->filePath.c_str());
+                pAssetClose(&asset);
+                return false;
+            }
+            outputStream.writeBytes(1024, bytes);
+        }
+        nbytes = entry->fileSize - i;
+    }
+    
+    if (pAssetRead(&asset, bytes, nbytes) != nbytes)
+    {
+        PLOG_ERROR("Failed to read archive entry %s.", entry->filePath.c_str());
+        pAssetClose(&asset);
+        return false;
+    }
+    outputStream.writeBytes(nbytes, bytes);
+    
+    pAssetClose(&asset);
+    
+    return true;
 }
 
 const PArchiveEntry* PArchiveFile::findEntry(const pchar *filePath) const

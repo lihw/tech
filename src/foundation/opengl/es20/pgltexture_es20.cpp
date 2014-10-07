@@ -263,6 +263,15 @@ void PGlTexture::setFiltering(PGlTextureFilteringEnum minFiltering,
     m_magFiltering = magFiltering;
 }
 
+void PGlTexture::setMipmap()
+{
+    if (!m_mipmap)
+    {
+        setMipmapInternal(true);
+        m_mipmap = true;
+    }
+}
+
 void PGlTexture::enable(puint32 textureUnit)
 {
     PASSERT(!m_enabled);

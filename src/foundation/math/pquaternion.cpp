@@ -75,6 +75,12 @@ pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 x, pfloat32 y, pfloat32
     return out;
 }
 
+pfloat32 * P_APIENTRY pQuaternionCreateRotation(pfloat32 angle, pfloat32 x, pfloat32 y, pfloat32 z, pfloat32* out)
+{
+    PASSERT_NOTIMPLEMENTED();
+    return out;
+}
+
 pfloat32 * P_APIENTRY pQuaternionCreateRotationX(pfloat32 angle, pfloat32 *out)
 {
     out[0] = sinf(angle * 0.5f); 
@@ -108,33 +114,22 @@ pfloat32 * P_APIENTRY pQuaternionCreateRotationZ(pfloat32 angle, pfloat32 *out)
 void P_APIENTRY pQuaternionGetRotation(const pfloat32 *in, pfloat32 &anglex, 
     pfloat32 &angley, pfloat32 &anglez)
 {
-    pfloat32 x = in[0];
-    pfloat32 y = in[1];
-    pfloat32 z = in[2];
-    pfloat32 w = in[3];
+    // See http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+    pfloat32 q0 = in[3];
+    pfloat32 q1 = in[0];
+    pfloat32 q2 = in[1];
+    pfloat32 q3 = in[2];
 
-    pfloat32 f00 = 1.0f - 2.0f * y * y - 2.0f * z * z;
-    pfloat32 f20 = 2.0f * x * z - 2.0f * w * y;
+    pfloat32 f00 = 1.0f - 2.0f * q2 * q2 - 2.0f * q3 * q3;
+    pfloat32 f20 = 2.0f * q0 * q2 - 2.0f * q3 * q1;
 
-    if (f00 != 0.0f)
-    {
-    	pfloat32 f10 = 2.0f * x * y + 2.0f * w * z;
-    	pfloat32 f21 = 2.0f * y * z + 2.0f * w * x;
-    	pfloat32 f22 = 1.0f - 2.0f * x * x - 2.0f * y * y;
+    pfloat32 f10 = 2.0f * q0 * q3 + 2.0f * q1 * q2;
+    pfloat32 f21 = 2.0f * q0 * q1 + 2.0f * q2 * q3;
+    pfloat32 f22 = 1.0f - 2.0f * q1 * q1 - 2.0f * q2 * q2;
 
-        anglex = atan2f(f21, f22);
-    	angley = asinf(-f20);
-    	anglez = atan2f(f10, f00);
-    }
-    else
-    {
-    	pfloat32 f01 = 2.0f * x * y - 2.0f * w * z;
-    	pfloat32 f11 = 1.0f - 2.0f * x * x - 2.0f * z * z;
-
-        anglex = atan2f(f01, f11);
-    	angley = asinf(-f20);
-    	anglez = 0.0f;
-    }
+    anglex = atan2f(f21, f22);
+    angley = asinf(-f20);
+    anglez = atan2f(f10, f00);
 }
 
 pfloat32 * P_APIENTRY pQuaternionRotate(pfloat32 angle, pfloat32 x, pfloat32 y, pfloat32 z, 

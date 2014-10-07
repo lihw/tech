@@ -157,8 +157,8 @@
             PInputCursorStateEnum cursorStates[] =
             {
                 P_CURSOR_STATE_DOWN,        // UITouchPhaseBegin
-                P_CURSOR_STATE_STATIONARY,  // UITouchPhaseStationary
                 P_CURSOR_STATE_MOVE,        // UITouchPhaseMoved
+                P_CURSOR_STATE_STATIONARY,  // UITouchPhaseStationary
                 P_CURSOR_STATE_UP,          // UITouchPhaseEnded
                 P_CURSOR_STATE_UP,          // UITouchPhaseCanceled,
             };
@@ -198,9 +198,9 @@
 
             PInputCursorStateEnum cursorStates[] =
             {
-                P_CURSOR_STATE_DOWN,        // UITouchPhaseBegin
-                P_CURSOR_STATE_STATIONARY,  // UITouchPhaseStationary
+                P_CURSOR_STATE_DOWN,        // UITouchPhaseBegan
                 P_CURSOR_STATE_MOVE,        // UITouchPhaseMoved
+                P_CURSOR_STATE_STATIONARY,  // UITouchPhaseStationary
                 P_CURSOR_STATE_UP,          // UITouchPhaseEnded
                 P_CURSOR_STATE_UP,          // UITouchPhaseCanceled,
             };
@@ -240,9 +240,9 @@
             
             PInputCursorStateEnum cursorStates[] =
             {
-                P_CURSOR_STATE_DOWN,        // UITouchPhaseBegin
-                P_CURSOR_STATE_STATIONARY,  // UITouchPhaseStationary
+                P_CURSOR_STATE_DOWN,        // UITouchPhaseBegan
                 P_CURSOR_STATE_MOVE,        // UITouchPhaseMoved
+                P_CURSOR_STATE_STATIONARY,  // UITouchPhaseStationary
                 P_CURSOR_STATE_UP,          // UITouchPhaseEnded
                 P_CURSOR_STATE_UP,          // UITouchPhaseCanceled,
             };
@@ -264,6 +264,7 @@
 {
     NSLog(@"touch canceled.");
 }
+
 
 
 @end

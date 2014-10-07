@@ -67,14 +67,16 @@ public:
     pbool load(const pchar *filePath);
 
     // The number of files in archive.
-    puint32 getNumberOfFiles() const;
+    puint32 numberOfFiles() const;
     // List all file names in this archive.
-    void getFilenames(PArray<PString> &out_filenames) const;
+    void filenames(PArray<PString> &out_filenames) const;
     // Create an input stream from the archive. If failed, try to create the input stream
     // from the external storage using the relative path.
     pbool createInputStream(const pchar *filePath, PInputStream *out_inputStream);
     // Check if the file is in archive.
     pbool isPathInArchive(const pchar *filePath) const;
+    // Uncompress the file in the archive to destination.
+    pbool uncompress(const pchar *filePath, const pchar *destinationPath);
 
 private:
     const PArchiveEntry* findEntry(const pchar *filePath) const;

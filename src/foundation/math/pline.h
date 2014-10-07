@@ -20,7 +20,7 @@ public:
 
     P_INLINE PVector3 getAnyPoint() const
     { return m_point + m_direction * 2.0f; }
-    P_INLINE PVector3 getDirection() const
+    P_INLINE const PVector3& getDirection() const
     { return m_direction; }
 
 private:

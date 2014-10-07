@@ -233,7 +233,6 @@
 		EDAF44D8199900240094AEE9 /* pvector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pvector3.h; sourceTree = "<group>"; };
 		EDAF44D9199900240094AEE9 /* pvector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pvector4.cpp; sourceTree = "<group>"; };
 		EDAF44DA199900240094AEE9 /* pvector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pvector4.h; sourceTree = "<group>"; };
-		EDAF44DB199900240094AEE9 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		EDAF44DD199900240094AEE9 /* pmemorydebugger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pmemorydebugger.cpp; sourceTree = "<group>"; };
 		EDAF44DE199900240094AEE9 /* pmemorydebugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pmemorydebugger.h; sourceTree = "<group>"; };
 		EDAF44DF199900240094AEE9 /* pmemoryfunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pmemoryfunction.cpp; sourceTree = "<group>"; };
@@ -591,7 +590,6 @@
 				EDAF44D8199900240094AEE9 /* pvector3.h */,
 				EDAF44D9199900240094AEE9 /* pvector4.cpp */,
 				EDAF44DA199900240094AEE9 /* pvector4.h */,
-				EDAF44DB199900240094AEE9 /* readme.txt */,
 			);
 			path = math;
 			sourceTree = "<group>";

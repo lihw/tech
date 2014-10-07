@@ -11,6 +11,7 @@
 
 #include <PFoundation/pvariant.h>
 #include <PFoundation/pconststring.h>
+#include <PFoundation/pquaternion.h>
 
 #include <math.h>
 
@@ -118,11 +119,7 @@ void PPropertyTransform::operator=(const PPropertyTransform& other)
     
 void PPropertyTransform::setValue(const PVariant &value)
 {
-    PASSERT(value.getType() == P_VARIANT_MATRIX4X4);
-    if (value.getType() == P_VARIANT_MATRIX4X4)
-    {
-        setMatrix4x4(value.toMatrix4x4().m_m);
-    }
+    PASSERT_NOTIMPLEMENTED();
 }
     
 void PPropertyTransform::setValue(const void* value)
@@ -280,8 +277,9 @@ void PPropertyTransform::setScaling(const PVector3 &v)
     
 void PPropertyTransform::setRotation(pfloat32 angle, pfloat32 x, pfloat32 y, pfloat32 z)
 {
-    // TODO:
-    PASSERT_NOTIMPLEMENTED();
+    pfloat32 q[4];
+    pQuaternionCreateRotation(angle, x, y, z, q);
+    setQuaternion(q[0], q[1], q[2], q[3]);
 }
     
 void PPropertyTransform::setRotation(pfloat32 angle, const PLine &line)
@@ -289,7 +287,18 @@ void PPropertyTransform::setRotation(pfloat32 angle, const PLine &line)
     // TODO:
     PASSERT_NOTIMPLEMENTED();
 }
-    
+
+void PPropertyTransform::setQuaternion(pfloat32 x, pfloat32 y, pfloat32 z, pfloat32 w)
+{
+    pfloat32 q[] = { x, y, z, w };
+    pfloat32 rx, ry, rz;
+
+    pQuaternionGetRotation(q, rx, ry, rz);
+    setRotationX(rx);
+    setRotationY(ry);
+    setRotationZ(rz);
+}
+
 void PPropertyTransform::setLookAt(pfloat32 eyex, pfloat32 eyey, pfloat32 eyez,
                                    pfloat32 centerx, pfloat32 centery, pfloat32 centerz,
                                    pfloat32 upx, pfloat32 upy, pfloat32 upz)
@@ -373,56 +382,56 @@ const PMatrix4x4 PPropertyTransform::toCameraMatrix4x4() const
     return matrix;
 }
 
-void PPropertyTransform::operator=(const PMatrix4x4 &matrix)
-{
-    setMatrix4x4(matrix.m_m);
-}
-
-void PPropertyTransform::setMatrix4x4(const pfloat32 *matrix)
-{
-    m_matrix.copy(matrix);
-    
-    pfloat32 sx;
-    pfloat32 sy;
-    pfloat32 sz;
-    pMatrix4x4GetScaling(matrix, &sx, &sy, &sz);
-
-    m_scalingx = sx;
-    m_scalingy = sy;
-    m_scalingz = sz;
-    
-    m_translationx = matrix[12];
-    m_translationy = matrix[13];
-    m_translationz = matrix[14];
-    
-    pfloat32 matrixRT[16];
-    pMatrix4x4Copy(matrix, matrixRT);
-
-    matrixRT[0] /= sx;
-    matrixRT[1] /= sx;
-    matrixRT[2] /= sx;
-    
-    matrixRT[4] /= sy;
-    matrixRT[5] /= sy;
-    matrixRT[6] /= sy;
-    
-    matrixRT[8]  /= sz;
-    matrixRT[9]  /= sz;
-    matrixRT[10] /= sz;
-
-    // FIXME: matrix->rotation->matrix is buggy. Please verify.
-    pfloat32 rx;
-    pfloat32 ry;
-    pfloat32 rz;
-    pMatrix4x4GetRotationRxRyRz(matrixRT, &rx, &ry, &rz);
-
-    m_rotationx = rx;
-    m_rotationy = ry;
-    m_rotationz = rz;
-
-    m_dirty = false;
-    m_changed = true;
-}
+//void PPropertyTransform::operator=(const PMatrix4x4 &matrix)
+//{
+//    setMatrix4x4(matrix.m_m);
+//}
+//
+//void PPropertyTransform::setMatrix4x4(const pfloat32 *matrix)
+//{
+//    m_matrix.copy(matrix);
+//    
+//    pfloat32 sx;
+//    pfloat32 sy;
+//    pfloat32 sz;
+//    pMatrix4x4GetScaling(matrix, &sx, &sy, &sz);
+//
+//    m_scalingx = sx;
+//    m_scalingy = sy;
+//    m_scalingz = sz;
+//    
+//    m_translationx = matrix[12];
+//    m_translationy = matrix[13];
+//    m_translationz = matrix[14];
+//    
+//    pfloat32 matrixRT[16];
+//    pMatrix4x4Copy(matrix, matrixRT);
+//
+//    matrixRT[0] /= sx;
+//    matrixRT[1] /= sx;
+//    matrixRT[2] /= sx;
+//    
+//    matrixRT[4] /= sy;
+//    matrixRT[5] /= sy;
+//    matrixRT[6] /= sy;
+//    
+//    matrixRT[8]  /= sz;
+//    matrixRT[9]  /= sz;
+//    matrixRT[10] /= sz;
+//
+//    // FIXME: matrix->rotation->matrix is buggy. Please verify.
+//    pfloat32 rx;
+//    pfloat32 ry;
+//    pfloat32 rz;
+//    pMatrix4x4GetRotationRxRyRz(matrixRT, &rx, &ry, &rz);
+//
+//    m_rotationx = rx;
+//    m_rotationy = ry;
+//    m_rotationz = rz;
+//
+//    m_dirty = false;
+//    m_changed = true;
+//}
 
 void PPropertyTransform::interpolate(pfloat32 t, PAbstractProperty *a, PAbstractProperty *b)
 {

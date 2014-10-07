@@ -52,7 +52,8 @@ public:
     pbool create(puint8 **data, puint32 size, PGlTextureFormatEnum foramt, pbool mipmap);
     void setWrapMode(PGLTextureWrapModeEnum wrapModeS, PGLTextureWrapModeEnum wrapModeT);
     void setFiltering(PGlTextureFilteringEnum minFiltering, PGlTextureFilteringEnum magFiltering);
-
+    void setMipmap();
+    
     P_INLINE pbool isCompressed() const { return m_compressed; }
     P_INLINE pbool isMipmap() const { return m_mipmap; }
     P_INLINE puint32 bytes() const { return m_bytes; }
@@ -64,7 +65,6 @@ public:
 
     void enable(puint32 textureUnit);
     void disable();
-
 
     void copyTexture(PGlTextureFormatEnum format, puint32 x, puint32 y, 
         puint32 width, puint32 height, puint32 border);

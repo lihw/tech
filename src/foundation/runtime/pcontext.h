@@ -82,7 +82,7 @@ public:
     virtual void onLongPress(pint32 x, pint32 y) {}
     virtual void onTap(pint32 x, pint32 y, puint32 count) {}
     virtual void onFling(pfloat32 x, pfloat32 y) {}
-
+    
     P_INLINE const PString       &name() const { return m_properties.m_contextName; }
     const puint32                *rect() const { return m_rect; }
     P_INLINE PContextState       state() const { return m_state; }
