@@ -11,9 +11,7 @@
 
 #include "pgesture_private.h"
 
-#include <PFoundation/PContext.h>
-#include <PFoundation/pevent.h>
-
+#include <PFoundation/pcontext.h>
 #include <PFoundation/pnew.h>
 #include <PFoundation/plog.h>
 #include <PFoundation/passert.h>
@@ -77,21 +75,19 @@ pbool PGestureManager::resume()
     return true;
 }
 
-void PGestureManager::recognize(PEvent *event)
+void PGestureManager::recognize(PInputEventTouch::TouchCursor *cursor)
 {
-    PEventTypeEnum eventType = event->getType();
-
-    pint32  x         = event->parameter(P_EVENTPARAMETER__TOUCH_X).toInt();  
-    pint32  y         = event->parameter(P_EVENTPARAMETER__TOUCH_Y).toInt();
-    pint32  pointer   = event->parameter(P_EVENTPARAMETER__TOUCH_CURSOR_ID).toInt();
-    puint32 timestamp = event->parameter(P_EVENTPARAMETER__TOUCH_TIMESTAMP).toUint32();
+    pint32  x         = cursor->m_x;
+    pint32  y         = cursor->m_y;
+    pint32  pointer   = cursor->m_id;
+    puint32 timestamp = cursor->m_timestamp;
 
     if (pointer > 1)
     {
         return ;
     }
 
-    if (eventType == P_EVENT__TOUCH_DOWN)
+    if (cursor->m_state == P_CURSOR_STATE_DOWN)
     {
         if (m_gesturesEnabled[P_GESTURE_TYPE_TAP])
         {
@@ -114,7 +110,7 @@ void PGestureManager::recognize(PEvent *event)
             m_gestures[P_GESTURE_TYPE_PINCH]->touchDown(x, y, timestamp, pointer);
         }
     }
-    else if (eventType == P_EVENT__TOUCH_UP)
+    else if (cursor->m_state == P_CURSOR_STATE_UP)
     {
         clamp(x, y);
 
@@ -139,7 +135,7 @@ void PGestureManager::recognize(PEvent *event)
             m_gestures[P_GESTURE_TYPE_PINCH]->touchUp(x, y, timestamp, pointer);
         }
     }
-    else if (eventType == P_EVENT__TOUCH_MOVE)
+    else if (cursor->m_state == P_CURSOR_STATE_MOVE)
     {
         clamp(x, y);
 

@@ -38,8 +38,7 @@ void PGesturePinch::touchDown(pint32 x, pint32 y, puint32 timeStamp, pint32 poin
         // During pinch ,receive third pointer, send pinch end event and reset.
         if (m_state == STATE_MOVING)
         {
-            PEvent* event = createEvent(P_EVENT__PINCH_END);
-            event->queue(reinterpret_cast<PObject *>(P_NULL));
+            m_manager->context()->onPinchEnd();
         }
 
         reset();

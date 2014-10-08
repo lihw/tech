@@ -75,13 +75,18 @@ public:
     
     virtual void onPanBegin(pint32 x, pint32 y) {}
     virtual void onPan(pint32 x, pint32 y, pint32 dx, pint32 dy) {}
-    virtual void onPanEnd(pint32 x, pint32 y, pint32 dx, pint32 dy) {}
+    virtual void onPanEnd() {}
     virtual void onPinchBegin(const pint32 *pt1, const pint32 *pt2) {}
     virtual void onPinch(const pint32 *pt1, const pint32 *pt2, pfloat32 angle, pfloat32 scaling) {}
     virtual void onPinchEnd() {}
     virtual void onLongPress(pint32 x, pint32 y) {}
     virtual void onTap(pint32 x, pint32 y, puint32 count) {}
     virtual void onFling(pfloat32 x, pfloat32 y) {}
+    virtual void onKeyboard(puint32 state, puint32 key, puint32 scancode) {}
+    virtual void onTouchDown(pint32 id, pint32 x, pint32 y) {}
+    virtual void onTouchUp(pint32 id, pint32 x, pint32 y) {}
+    virtual void onTouchMove(pint32 id, pint32 x, pint32 y) {}
+    
     
     P_INLINE const PString       &name() const { return m_properties.m_contextName; }
     const puint32                *rect() const { return m_rect; }
@@ -96,8 +101,6 @@ public:
 protected:
     virtual pbool onUpdate();
 
-    virtual pbool onKeyboard(PEvent *event);
-    virtual pbool onTouch(PEvent *event);
     virtual pbool onUserEvent(PEvent *event);
     virtual pbool onTimer(PEvent *event);
 

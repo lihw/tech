@@ -42,8 +42,7 @@ void PGesturePan::touchDown(pint32 x, pint32 y, puint32 timeStamp, pint32 pointe
         // During pan, receiving another pointer down, send pan end event and reset
         if (m_state == STATE_MOVING)
         {
-            PEvent* event = createEvent(P_EVENT__PAN_END);
-            event->queue(reinterpret_cast<PObject *>(P_NULL));
+             m_manager->context()->onPanEnd();
         }
 
         reset();
@@ -127,7 +126,7 @@ void PGesturePan::touchUp(pint32 x, pint32 y, puint32 timeStamp, pint32 pointer)
         case STATE_MOVING:
             {
                 // Call pan end.
-                m_manager->context()->onPanEnd(m_x, m_y, x - m_x, y - m_y);
+                m_manager->context()->onPanEnd();
                 reset();
             }
             break;

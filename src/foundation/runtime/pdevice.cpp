@@ -62,13 +62,7 @@ void PDevice::update()
                 {
                     // Get the native event 
                     PInputEventKey* keyEvent = event->getKeyEvent();
-                    // Translate it into PEvent and queue the PEvent.
-                    PEventTypeEnum eventType = 
-                        (PEventTypeEnum)(P_EVENT__KEYDOWN + (keyEvent->getKeyPressState() - P_KEY_DEVICE_STATE_DOWN));
-                    PEvent* event = m_context->eventManager()->createEvent(eventType, P_NULL);
-
-                    event->setParameter(P_EVENTPARAMETER__KEY_SCANCODE, (pint32)keyEvent->getKey());
-                    event->queue(reinterpret_cast<PObject *>(P_NULL));
+                    m_context->onKeyboard(keyEvent->getState(), keyEvent->getNativeScanCode(), keyEvent->getKey());
                 }
                 break;
             case P_INPUT_EVENT_TOUCH:
@@ -79,19 +73,32 @@ void PDevice::update()
                     for (puint32 i = 0; i < cursorCount; i++)
                     {
                         // Translate the input type to touch event type.
-                        PEventTypeEnum type = (PEventTypeEnum)(P_EVENT__TOUCH_DOWN + touchEvent->getCursor(i)->m_state);
-                        
-                        PEvent* event = m_context->eventManager()->createEvent(type, P_NULL);
-                        
-                        // Touch event
-                        event->setParameter(P_EVENTPARAMETER__TOUCH_CURSOR_ID, (pint32)touchEvent->getCursor(i)->m_id);
-                        event->setParameter(P_EVENTPARAMETER__TOUCH_X, (pint32)touchEvent->getCursor(i)->m_x);
-                        event->setParameter(P_EVENTPARAMETER__TOUCH_Y, (pint32)touchEvent->getCursor(i)->m_y);
-                        event->setParameter(P_EVENTPARAMETER__TOUCH_TIMESTAMP, (puint32)touchEvent->getCursor(i)->m_timestamp);
-                        event->queue(reinterpret_cast<PObject *>(P_NULL));
+                        PInputEventTouch::TouchCursor *cursor = touchEvent->getCursor(i);
+
+                        // TODO: use function pointer array instead of switch().
+                        switch (cursor->m_state)
+                        {
+                            case P_CURSOR_STATE_DOWN:      
+                                m_context->onTouchDown((pint32)cursor->m_id,
+                                                       (pint32)cursor->m_x,
+                                                       (pint32)cursor->m_y);
+                                break;
+                            case P_CURSOR_STATE_STATIONARY:
+                                break;
+                            case P_CURSOR_STATE_MOVE:
+                                m_context->onTouchMove((pint32)cursor->m_id,
+                                                       (pint32)cursor->m_x,
+                                                       (pint32)cursor->m_y);
+                                break;
+                            case P_CURSOR_STATE_UP:
+                                m_context->onTouchUp((pint32)cursor->m_id,
+                                                     (pint32)cursor->m_x,
+                                                     (pint32)cursor->m_y);
+                                break;
+                        }
 
                         // Gesture
-                        m_context->gestureManager()->recognize(event);
+                        m_context->gestureManager()->recognize(cursor);
                     }
                 }
                 break;

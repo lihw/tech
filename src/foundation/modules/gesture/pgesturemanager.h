@@ -11,10 +11,10 @@
 #define PGESTUREMANAGER_H
 
 #include <PFoundation/pmodule.h>
+#include <PFoundation/pinput.h>
 
 
 class PAbstractGesture;
-class PEvent;
 
 enum PGestureTypeEnum
 {
@@ -39,7 +39,7 @@ public:
     virtual void uninitialize();
     virtual pbool resume();
 
-    void recognize(PEvent *event);
+    void recognize(PInputEventTouch::TouchCursor *cursor);
 
     void setGestureEnabled(PGestureTypeEnum type, pbool enabled);
 

@@ -13,8 +13,6 @@
 
 enum PEventParameterEnum
 {
-#include "events/pkeyevent.h"
-#include "events/ptouchevent.h"
 #include "events/panimationevent.h"
 #include "events/ptimerevent.h"
 };

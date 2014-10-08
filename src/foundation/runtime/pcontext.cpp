@@ -290,16 +290,6 @@ void PContext::dispatch(PEvent *event)
 {
     switch (event->type())
     {
-        case P_EVENT__KEYUP:
-        case P_EVENT__KEYDOWN:
-        case P_EVENT__KEYREPEAT:
-            onKeyboard(event);
-            break;
-        case P_EVENT__TOUCH_DOWN:
-        case P_EVENT__TOUCH_MOVE:
-        case P_EVENT__TOUCH_UP:
-            onTouch(event);
-            break;
         case P_EVENT__TIMER_EXPIRED:
             onTimer(event);
             break;
@@ -309,15 +299,6 @@ void PContext::dispatch(PEvent *event)
     }
 }
 
-pbool PContext::onKeyboard(PEvent *event)
-{
-    return true;
-}
-
-pbool PContext::onTouch(PEvent *event)
-{
-    return true;
-}
 pbool PContext::onUserEvent(PEvent *event)
 {
     return true;
