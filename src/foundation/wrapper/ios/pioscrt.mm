@@ -55,12 +55,10 @@ void P_APIENTRY pstrncpy(pchar* dst, const pchar* src, puint32 n)
         return ;
     }
     
-    const pchar *ret = strncpy(dst, src, n);
-    // If dst is not terminated with '\0', we manually terminate it.
-    if (ret == &dst[n])
-    {
-        dst[n] = 0;
-    }
+    strncpy(dst, src, n);
+    // dst is not terminated with '\0', we manually terminate it.
+    // We assume there is enough space in dst.
+    dst[n] = 0;
 }
 
 const pchar* P_APIENTRY pstrstr(const pchar* str1, const pchar *str2)

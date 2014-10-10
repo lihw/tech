@@ -59,8 +59,6 @@ static char* find_char_or_comment(const char* s, char c)
 /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
 static char* strncpy0(char* dest, const char* src, size_t size)
 {
-   // strncpy_s(dest, size, src, size);
-   // dest[size - 1] = '\0';
     pstrncpy(dest, src, size);
     return dest;
 }

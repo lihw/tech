@@ -36,14 +36,14 @@ pbool PArchiveFile::load(const pchar *filePath)
     PAsset asset = pAssetOpen(filePath);
     if (!pAssetIsValid(&asset))
     {
-        PLOG_ERROR("Not a valid asset archive file: %s", filePath);
+        PLOG_ERROR("Not a valid asset archive file: %s.", filePath);
         return false;
     }
 
     // Read header
     if (!readArchiveHeader(&asset))
     {
-       PLOG_ERROR("Failed to parse archive header %s", filePath);
+       PLOG_ERROR("Failed to parse archive header %s.", filePath);
        return false;
     }
 
@@ -177,31 +177,27 @@ pbool PArchiveFile::uncompress(const pchar *filePath, const pchar *destinationPa
     POutputStream outputStream;
     outputStream.createFromFile(destinationPath, P_STREAM_ENDIANNESS_PLATFORM);
 
-    puint8 bytes[1024];
-    puint32 nbytes = entry->fileSize;
-    if (entry->fileSize > 1024)
+    puint8 bytes[4096];
+    puint32 niters = entry->fileSize / 4096;
+    puint32 rest = entry->fileSize - niters * 4096;
+    for (puint32 i = 0; i < niters; ++i)
     {
-        puint32 i;
-        for (i = 0; i < entry->fileSize; i += 1024)
+        if (pAssetRead(&asset, bytes, 4096) != 4096)
         {
-            if (pAssetRead(&asset, bytes, 1024) != 1024)
-            {
-                PLOG_ERROR("Failed to read archive entry %s.", entry->filePath.c_str());
-                pAssetClose(&asset);
-                return false;
-            }
-            outputStream.writeBytes(1024, bytes);
+            PLOG_ERROR("Failed to read archive entry %s.", entry->filePath.c_str());
+            pAssetClose(&asset);
+            return false;
         }
-        nbytes = entry->fileSize - i;
+        outputStream.writeBytes(4096, bytes);
     }
     
-    if (pAssetRead(&asset, bytes, nbytes) != nbytes)
+    if (pAssetRead(&asset, bytes, rest) != rest)
     {
         PLOG_ERROR("Failed to read archive entry %s.", entry->filePath.c_str());
         pAssetClose(&asset);
         return false;
     }
-    outputStream.writeBytes(nbytes, bytes);
+    outputStream.writeBytes(rest, bytes);
     
     pAssetClose(&asset);
     

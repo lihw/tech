@@ -20,15 +20,26 @@
 
 PAsset P_APIENTRY pAssetOpen(const pchar *fileName)
 {
-    pchar path[4096];
-    pstrncpy(path, pPathGetApplicationDirectory(), 4096);
-    pstrcat(path, pPathGetDelimiter());
-    pstrcat(path, fileName);
-
     PAsset ret;
     
-    ret.pHandle = (void *)fopen(path, "rb");
-    ret.pData   = P_NULL;
+    // If it is an absolute path, open it directly. Otherwise
+    // it is supposed to be at the application folder.
+    if (fileName[0] == '/')
+    {
+        ret.pHandle = (void *)fopen(fileName, "rb");
+        ret.pData   = P_NULL;
+    }
+    else
+    {
+        pchar path[4096];
+
+        pstrncpy(path, pPathGetApplicationDirectory(), 4095);
+        pstrcat(path, pPathGetDelimiter());
+        pstrcat(path, fileName);
+        
+        ret.pHandle = (void *)fopen(path, "rb");
+        ret.pData   = P_NULL;
+    }
     
     return ret;
 }
