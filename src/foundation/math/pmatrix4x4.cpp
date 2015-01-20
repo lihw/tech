@@ -340,7 +340,7 @@ pfloat32 * P_APIENTRY pMatrix4x4CreateRotationRzRyRx(pfloat32 rx, pfloat32 ry, p
     out[7] = 0.0f;
 
     out[8] =  cx * sy * cz + sx * sz;
-    out[9] =  sx * cy * sz - sx * cz;
+    out[9] =  cx * sy * sz - sx * cz;
     out[10] = cx * cy;
     out[11] = 0.0f;
 
